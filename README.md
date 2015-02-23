@@ -8,6 +8,10 @@ var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
 string cleanHtml = sanitizer.Sanitize(dirtyHtml);
 ```
 
+HtmlSanitizer is a conservative sanitizer with a white list. Without configuration it will strip absolutely everything. This ensures that you are in control of what HTML is getting through.
+
+It was inspired by the client side parser of the wysihtml5 editor.
+
 Use cases
 ---------
 
@@ -52,7 +56,7 @@ string cleanHtml = sanitizer.Sanitize(dirtyHtml);
 
 ### Configuration
 
-The code below demonstrates how to configure a rule set which only allows <strong>, <b>, <i> and <a> tags and which enforces the link tags to have a valid url, be no-follow and open in a new window.
+The code below demonstrates how to configure a rule set which only allows **strong**, **i** and **a** tags and which enforces the link tags to have a valid url, be no-follow and open in a new window. In addition, any **b** tag is renamed to **strong** because they more or less do the same anyway. Any empty tags are removed to get rid of them. This would be a nice example for comment processing.
 
 ```C#
 var sanitizer = new HtmlSanitizer();
