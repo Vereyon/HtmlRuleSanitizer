@@ -35,5 +35,26 @@ namespace Vereyon.Web
             result = sanitizer.Sanitize(input);
             Assert.Equal(remove, result);
         }
+
+        [Fact]
+        public void TagRenameTest()
+        {
+
+            var input = "<b>before</b> <strong>content</strong> after<b></b>";
+            var expected = "<strong>before</strong> <strong>content</strong> after";
+            string result;
+
+            var sanitizer = new HtmlSanitizer();
+            sanitizer.Tag("strong").RemoveEmpty();
+            sanitizer.Tag("b").Rename("strong").RemoveEmpty();
+            sanitizer.Tag("i").RemoveEmpty();
+            sanitizer.Tag("a").SetAttribute("target", "_blank")
+                .SetAttribute("rel", "nofollow")
+                .CheckAttribute("href", HtmlSanitizerCheckType.Url)
+                .RemoveEmpty();
+
+            result = sanitizer.Sanitize(input);
+            Assert.Equal(expected, result);
+        }
     }
 }

@@ -375,7 +375,7 @@ namespace Vereyon.Web
             sanitizer.Tag("h4").RemoveEmpty();
             sanitizer.Tag("h5").RemoveEmpty();
             sanitizer.Tag("strong").RemoveEmpty();
-            sanitizer.Tag("b").RemoveEmpty();
+            sanitizer.Tag("b").Rename("strong").RemoveEmpty();
             sanitizer.Tag("i").RemoveEmpty();
             sanitizer.Tag("em");
             sanitizer.Tag("br");
