@@ -1,21 +1,21 @@
 ﻿HtmlSanitizer
 =============
 
-Vereyon's HtmlSanitizer is a rule based HTML sanitizer built on top of Microsofts HTML Agility pack.
+HtmlRuleSanitizer is a white list rule based HTML sanitizer built on top of Microsofts HTML Agility pack.
 
 ```C#
 var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
 string cleanHtml = sanitizer.Sanitize(dirtyHtml);
 ```
 
-HtmlSanitizer is a conservative sanitizer with a white list. Without configuration it will strip absolutely everything. This ensures that you are in control of what HTML is getting through.
+Without configuration HtmlRuleSanitizer will strip absolutely everything. This ensures that you are in control of what HTML is getting through.
 
 It was inspired by the client side parser of the wysihtml5 editor.
 
 Use cases
 ---------
 
-HtmlSanitizer was designed with the following use cases in mind:
+HtmlRuleSanitizer was designed with the following use cases in mind:
 
  * Prevent cross-site scripting by removing javascript.
  * Restrict HTML to simple markup in order to allow for easy transformation to other document types without having to deal with all possible HTML tags.
