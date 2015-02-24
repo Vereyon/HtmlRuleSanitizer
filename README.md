@@ -1,5 +1,5 @@
-﻿HtmlSanitizer
-=============
+﻿HtmlRuleSanitizer
+=================
 
 HtmlRuleSanitizer is a white list rule based HTML sanitizer built on top of Microsofts HTML Agility pack.
 
