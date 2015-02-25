@@ -12,17 +12,34 @@ namespace Vereyon.Web
     {
 
         /// <summary>
+        /// White lists the specified CSS class names.
+        /// </summary>
+        /// <param name="sanitizer"></param>
+        /// <param name="classNames"></param>
+        /// <returns></returns>
+        public static HtmlSanitizer AllowCss(this HtmlSanitizer sanitizer, params string[] classNames)
+        {
+            foreach (var className in classNames)
+            {
+
+                // Make sure no empty class names are added.
+                string cleanedClassName = className.Trim();
+                if (string.IsNullOrEmpty(cleanedClassName))
+                    continue;
+                sanitizer.AllowedCssClasses.Add(cleanedClassName);
+            }
+
+            return sanitizer;
+        }
+
+        /// <summary>
         /// White lists the specified space seperated CSS class names.
         /// </summary>
         /// <param name="className"></param>
         /// <returns></returns>
         public static HtmlSanitizer AllowCss(this HtmlSanitizer sanitizer, string classNames)
         {
-            foreach (var className in classNames.Split(' '))
-            {
-                sanitizer.AllowedCssClasses.Add(className.Trim());
-            }
-            return sanitizer;
+            return sanitizer.AllowCss(classNames.Split(' '));
         }
 
         /// <summary>
