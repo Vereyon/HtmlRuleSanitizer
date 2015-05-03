@@ -2,3 +2,5 @@
 /Web.HtmlSanitizer/bin
 /Web.HtmlSanitizer.Tests/obj
 /Web.HtmlSanitizer.Tests/bin
+/Web.HtmlSanitizer/*.nupkg
+/Web.HtmlSanitizer/NuGet-Signed.exe

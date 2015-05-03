@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Vereyon.Web.HtmlSanitizer</id>
+    <version>1.0.0</version>
+    <title>HtmlRuleSanitizer</title>
+    <authors>Vereyon</authors>
+    <owners>Vereyon</owners>
+    <licenseUrl>https://github.com/Vereyon/HtmlRuleSanitizer/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/Vereyon/HtmlRuleSanitizer</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Rule based HTML sanitizer using a white list.</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>ASP.NET MVC HTML sanitizer</tags>
+  </metadata>
+</package>
