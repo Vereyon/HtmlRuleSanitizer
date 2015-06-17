@@ -279,6 +279,7 @@ namespace Vereyon.Web
             attribute.Name = attribute.Name.ToLowerInvariant();
             
             // Apply global CSS class whitelist. If the attribute is complete removed, we are done.
+            // TODO: Implement this as a global attribute check?
             if (attribute.Name == "class")
             {
                 if (!ApplyCssWhitelist(attribute))
@@ -316,6 +317,7 @@ namespace Vereyon.Web
                 attribute.Value = valueOverride;
 
             // If we are in white listing mode and no check or override is specified, simply remove the attribute.
+            // TODO: Wouldn't it be nicer is we generalized attribute rules for both checks and overrides? Would untangle code.
             if (WhiteListMode &&
                 !rule.SetAttributes.ContainsKey(attribute.Name) &&
                 !rule.CheckAttributes.ContainsKey(attribute.Name) && attribute.Name != "class")
@@ -432,6 +434,5 @@ namespace Vereyon.Web
         /// Specifies that this attribute is allowed and that it's value is not to be checked.
         /// </summary>
         AllowAttribute,
-
     }
 }

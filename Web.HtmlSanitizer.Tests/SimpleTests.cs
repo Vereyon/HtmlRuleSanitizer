@@ -15,12 +15,12 @@ namespace Vereyon.Web
             var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
 
             string input = @"<h1>Heading</h1>
-<p>Some comments<span></span></p>
+<p onclick=""alert('gotcha!')"">Some comments<span></span></p>
 <script type=""text/javascript"">I'm illegal for sure</script>
 <p><a href=""http://www.vereyon.com/"">Nofollow legal link</a> and here's another one: <a href=""javascript:alert('test')"">Obviously I'm illegal</a></p>";
             string expected = @"<h1>Heading</h1>
 <p>Some comments</p>
-    
+
 <p><a href=""http://www.vereyon.com/"" target=""_blank"" rel=""nofollow"">Nofollow legal link</a> and here's another one: Obviously I'm illegal</p>";
 
             var output = sanitizer.Sanitize(input);
@@ -49,6 +49,70 @@ namespace Vereyon.Web
     <p><a href=""http://www.vereyon.com/"" target=""_blank"" rel=""nofollow"">Nofollow legal link</a> and here's another one: Obviously I'm illegal</p>
 </body>
 </html>";
+
+            var output = sanitizer.Sanitize(input);
+            Assert.Equal(expected, output);
+        }
+
+        /// <summary>
+        /// Simple test to see if potentially dangerous attributes are stripped.
+        /// </summary>
+        [Fact]
+        public void DirtyAttributesTest()
+        {
+
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+
+            string input = @"<p><span onclick=""alert('test')"">Test</span></p>";
+            string expected = @"<p><span>Test</span></p>";
+
+            var output = sanitizer.Sanitize(input);
+            Assert.Equal(expected, output);
+        }
+
+        /// <summary>
+        /// Simple test to check if old skool capitalized html is handled.
+        /// </summary>
+        [Fact]
+        public void CapitalizedHtml()
+        {
+
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+
+            string input = @"<p><SPAN ID=""1234abc"">Test</SPAN></p>";
+            string expected = @"<p><span>Test</span></p>";
+
+            var output = sanitizer.Sanitize(input);
+            Assert.Equal(expected, output);
+        }
+
+        /// <summary>
+        /// Simple test to check if unclosed tags are cleaned up. Not sure if this is the desired behaviour, but al least the resulting HTML must be clean.
+        /// </summary>
+        [Fact]
+        public void UnclosedTagsTest()
+        {
+
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+
+            string input = @"<div><strong>Not properly closed</div>";
+            string expected = @"<strong>Not properly closed</strong>";
+
+            var output = sanitizer.Sanitize(input);
+            Assert.Equal(expected, output);
+        }
+
+        /// <summary>
+        /// Tets is comment removal is working.
+        /// </summary>
+        [Fact]
+        public void StripCommentsTest()
+        {
+
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+
+            string input = @"Test <!-- No comment --> Test";
+            string expected = @"Test  Test";
 
             var output = sanitizer.Sanitize(input);
             Assert.Equal(expected, output);
