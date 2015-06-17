@@ -32,7 +32,7 @@ Features
  * Tag attribute and CSS class enforcement
  * Tag flattening to simplify document structure while maintaining content
  * Tag renaming
- * Attribute checks (e.g. URL validity)
+ * Attribute checks (e.g. URL validity) and white listing
  * A fluent style configuration interface
  
 Usage
@@ -58,7 +58,7 @@ string cleanHtml = sanitizer.Sanitize(dirtyHtml);
 
 ### Configuration
 
-The code below demonstrates how to configure a rule set which only allows **strong**, **i** and **a** tags and which enforces the link tags to have a valid url, be no-follow and open in a new window. In addition, any **b** tag is renamed to **strong** because they more or less do the same anyway. Any empty tags are removed to get rid of them. This would be a nice example for comment processing.
+The code below demonstrates how to configure a rule set which only allows **strong**, **i** and **a** tags and which enforces the link tags to have a valid url, be no-follow and open in a new window. In addition, any **b** tag is renamed to **strong** because they more or less do the same anyway and **b** is deprecated. Any empty tags are removed to get rid of them. This would be a nice example for comment processing.
 
 ```C#
 var sanitizer = new HtmlSanitizer();
