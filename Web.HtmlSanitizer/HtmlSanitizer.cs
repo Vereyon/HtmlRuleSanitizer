@@ -39,7 +39,7 @@ namespace Vereyon.Web
 
         /// <summary>
         /// Gets / sets if the sanitizer operates in white list mode. If so, only tags for which rules are
-        /// set are preserved.
+        /// set and attributes for which checks are set are preserved.
         /// </summary>
         public bool WhiteListMode { get; set; }
 
@@ -60,6 +60,7 @@ namespace Vereyon.Web
         {
 
             AttributeCheckRegistry.Add(HtmlSanitizerCheckType.Url, new HtmlSanitizerAttributeCheckHandler(LinkHrefCheck));
+            AttributeCheckRegistry.Add(HtmlSanitizerCheckType.AllowAttribute, new HtmlSanitizerAttributeCheckHandler(x => SanitizerOperation.DoNothing));
         }
 
         /// <summary>
@@ -99,7 +100,7 @@ namespace Vereyon.Web
         }
 
         /// <summary>
-        /// Checks if the href attribute for the 
+        /// Checks if the href attribute contains a valid link.
         /// </summary>
         /// <param name="attribute"></param>
         /// <returns></returns>
@@ -277,7 +278,7 @@ namespace Vereyon.Web
             // Ensure that the attribute name does not contain any caps.
             attribute.Name = attribute.Name.ToLowerInvariant();
             
-            // Apply global CSS class whitelist.
+            // Apply global CSS class whitelist. If the attribute is complete removed, we are done.
             if (attribute.Name == "class")
             {
                 if (!ApplyCssWhitelist(attribute))
@@ -313,6 +314,15 @@ namespace Vereyon.Web
             // Apply value override if it is specified by the rule.
             if(rule.SetAttributes.TryGetValue(attribute.Name, out valueOverride))
                 attribute.Value = valueOverride;
+
+            // If we are in white listing mode and no check or override is specified, simply remove the attribute.
+            if (WhiteListMode &&
+                !rule.SetAttributes.ContainsKey(attribute.Name) &&
+                !rule.CheckAttributes.ContainsKey(attribute.Name) && attribute.Name != "class")
+            {
+                attribute.Remove();
+                return SanitizerOperation.DoNothing;
+            }
 
             // Do nothing else.
             return SanitizerOperation.DoNothing;
@@ -412,9 +422,16 @@ namespace Vereyon.Web
 
     public enum HtmlSanitizerCheckType
     {
+
         /// <summary>
         /// Checks if the passed HTML attribute contains a valid URL.
         /// </summary>
-        Url
+        Url,
+
+        /// <summary>
+        /// Specifies that this attribute is allowed and that it's value is not to be checked.
+        /// </summary>
+        AllowAttribute,
+
     }
 }

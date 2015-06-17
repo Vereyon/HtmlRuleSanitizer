@@ -134,7 +134,7 @@ namespace Vereyon.Web
         }
 
         /// <summary>
-        /// Specifies that the given check if be performed on any attribute with the given name.
+        /// Specifies that the given check is be performed on any attribute with the given name.
         /// </summary>
         /// <param name="rule"></param>
         /// <param name="attribute"></param>
@@ -143,6 +143,26 @@ namespace Vereyon.Web
         public static HtmlSanitizerTagRule CheckAttribute(this HtmlSanitizerTagRule rule, string attribute, HtmlSanitizerCheckType check)
         {
             rule.CheckAttributes[attribute] = check;
+            return rule;
+        }
+
+        /// <summary>
+        /// Specifies that the specified space seperated list of attributes are allowed on this tag.
+        /// </summary>
+        /// <param name="rule"></param>
+        /// <param name="attributes"></param>
+        /// <returns></returns>
+        public static HtmlSanitizerTagRule AllowAttributes(this HtmlSanitizerTagRule rule, string attributes)
+        {
+            foreach (var attribute in attributes.Split(' '))
+            {
+                var trimmed = attribute.Trim();
+                if (string.IsNullOrEmpty(trimmed))
+                    continue;
+
+                rule.CheckAttributes[trimmed] = HtmlSanitizerCheckType.AllowAttribute;
+            }
+
             return rule;
         }
 

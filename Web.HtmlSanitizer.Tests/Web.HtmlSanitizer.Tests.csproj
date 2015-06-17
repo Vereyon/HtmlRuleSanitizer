@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeCheckTests.cs" />
     <Compile Include="CssWhitelistTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="RuleTests.cs" />
