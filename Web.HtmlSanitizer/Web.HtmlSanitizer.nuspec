@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Vereyon.Web.HtmlSanitizer</id>
-    <version>1.1.0.0</version>
+    <version>1.1.1.0</version>
     <title>HtmlRuleSanitizer</title>
     <authors>Vereyon</authors>
     <owners>Vereyon</owners>
