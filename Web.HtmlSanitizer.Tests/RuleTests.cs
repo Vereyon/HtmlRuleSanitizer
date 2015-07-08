@@ -56,5 +56,31 @@ namespace Vereyon.Web
             result = sanitizer.Sanitize(input);
             Assert.Equal(expected, result);
         }
+
+        /// <summary>
+        /// Tests tag flattening on more complex content.
+        /// </summary>
+        [Fact]
+        public void TagFlattenTests()
+        {
+
+            var input = @"<p>Some prepended content</p>
+<p>before <span><b>Preserve before</b> content <i>Preserve</i></span> after</p>
+<p>Some trailing content</p>";
+            var expected = @"<p>Some prepended content</p>
+<p>before <b>Preserve before</b> content <i>Preserve</i> after</p>
+<p>Some trailing content</p>";
+            string result;
+
+            var sanitizer = new HtmlSanitizer();
+            sanitizer.Tag("span").Operation(SanitizerOperation.FlattenTag);
+            sanitizer.Tag("i");
+            sanitizer.Tag("b");
+            sanitizer.Tag("p");
+
+            // Test flatten
+            result = sanitizer.Sanitize(input);
+            Assert.Equal(expected, result);
+        }
     }
 }

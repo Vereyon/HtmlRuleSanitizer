@@ -248,7 +248,7 @@ namespace Vereyon.Web
                     // Sanitize children, then insert them after this node and remove this node.
                     SanitizeChildren(node);
                     foreach (var child in node.ChildNodes)
-                        node.ParentNode.InsertAfter(child, node);
+                        node.ParentNode.InsertBefore(child, node);
                     node.Remove();
                     return false;
 

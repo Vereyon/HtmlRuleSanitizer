@@ -52,6 +52,7 @@
     <Compile Include="RuleTests.cs" />
     <Compile Include="SimpleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UseCaseTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Web.HtmlSanitizer\Web.HtmlSanitizer.csproj">
