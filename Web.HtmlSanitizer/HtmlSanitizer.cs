@@ -148,7 +148,7 @@ namespace Vereyon.Web
             SanitizerOperation operation;
 
             // Remove any comment nodes if instructed to do so.
-            if (node.NodeType == HtmlNodeType.Comment || RemoveComments)
+            if (node.NodeType == HtmlNodeType.Comment && RemoveComments)
             {
                 node.Remove();
                 return;

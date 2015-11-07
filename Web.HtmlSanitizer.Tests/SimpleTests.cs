@@ -103,16 +103,34 @@ namespace Vereyon.Web
         }
 
         /// <summary>
-        /// Tets is comment removal is working.
+        /// Tests if comment removal is working.
         /// </summary>
         [Fact]
         public void StripCommentsTest()
         {
 
             var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+            sanitizer.RemoveComments = true;
 
             string input = @"Test <!-- No comment --> Test";
             string expected = @"Test  Test";
+
+            var output = sanitizer.Sanitize(input);
+            Assert.Equal(expected, output);
+        }
+
+        /// <summary>
+        /// Tests if allowing comments works.
+        /// </summary>
+        [Fact]
+        public void AllowCommentsTest()
+        {
+
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+            sanitizer.RemoveComments = false;
+
+            string input = @"Test <!-- No comment --> Test";
+            string expected = @"Test <!-- No comment --> Test";
 
             var output = sanitizer.Sanitize(input);
             Assert.Equal(expected, output);
