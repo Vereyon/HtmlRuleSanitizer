@@ -2,16 +2,16 @@
 <package >
   <metadata>
     <id>Vereyon.Web.HtmlSanitizer</id>
-    <version>1.1.2.0</version>
+    <version>1.1.3.0</version>
     <title>HtmlRuleSanitizer</title>
     <authors>Vereyon</authors>
     <owners>Vereyon</owners>
     <licenseUrl>https://github.com/Vereyon/HtmlRuleSanitizer/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/Vereyon/HtmlRuleSanitizer</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Rule based HTML sanitizer using a white list. Documentation at: https://github.com/Vereyon/HtmlRuleSanitizer </description>
-    <releaseNotes>Fixed allowing HTML comments not working.</releaseNotes>
-    <copyright>Copyright 2015</copyright>
-    <tags>ASP.NET MVC HTML sanitizer</tags>
+    <description>Rule based HTML sanitizer using a white list. Documentation at: https://github.com/Vereyon/HtmlRuleSanitizer</description>
+    <releaseNotes>Fixed relative urls not passing check.</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>ASP.NET MVC HTML sanitizer XSS antixss anti security</tags>
   </metadata>
 </package>

@@ -33,6 +33,24 @@ namespace Vereyon.Web
         }
 
         /// <summary>
+        /// Regression test for checking if relative URL's are accepted.
+        /// </summary>
+        [Fact]
+        public void UrlCheckRelativeTest()
+        {
+
+            string result;
+            var sanitizer = new HtmlSanitizer();
+            sanitizer.Tag("a").CheckAttribute("href", HtmlSanitizerCheckType.Url);
+
+            // Test a relative url, which should pass.
+            var input = @"<a href=""../relative.htm"">Relative link</a>";
+            var expected = @"<a href=""../relative.htm"">Relative link</a>";
+            result = sanitizer.Sanitize(input);
+            Assert.Equal(expected, result);
+        }
+
+        /// <summary>
         /// Tests if empty attributes are left alone.
         /// </summary>
         [Fact]

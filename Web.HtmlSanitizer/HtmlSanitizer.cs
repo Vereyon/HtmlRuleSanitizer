@@ -89,8 +89,8 @@ namespace Vereyon.Web
             if (!uri.IsWellFormedOriginalString())
                 return false;
 
-            // Reject the url if it has invalid schemes.
-            if (!AllowedUriSchemes.Contains(uri.Scheme, StringComparer.OrdinalIgnoreCase))
+            // Reject the url if it has invalid scheme. Only do this check if we are dealing with an absolute url.
+            if (uri.IsAbsoluteUri && !AllowedUriSchemes.Contains(uri.Scheme, StringComparer.OrdinalIgnoreCase))
                 return false;
 
             // Make sure to the url is well formed.
