@@ -106,10 +106,6 @@ namespace Vereyon.Web
         /// <returns></returns>
         public static SanitizerOperation LinkHrefCheck(HtmlAttribute attribute)
         {
-
-            if (attribute.Name != "href")
-                throw new ArgumentException("Expected href attribute.");
-
             // Check the url. There's no use in keeping link tags without a link, so flatten the tag on failure.
             if (!AttributeUrlCheck(attribute))
                 return SanitizerOperation.FlattenTag;
