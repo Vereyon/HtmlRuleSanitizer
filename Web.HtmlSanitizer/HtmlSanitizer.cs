@@ -39,7 +39,7 @@ namespace Vereyon.Web
 
         /// <summary>
         /// Gets / sets if the sanitizer operates in white list mode. If so, only tags for which rules are
-        /// set and attributes for which checks are set are preserved.
+        /// set and attributes for which checks are set are preserved. Defaults to true.
         /// </summary>
         public bool WhiteListMode { get; set; }
 
@@ -181,7 +181,6 @@ namespace Vereyon.Web
 
                 // If the tag is empty and the rule instructs the removal of empty tag, remove the node.
                 if (rule.RemoveEmpty
-                    && string.IsNullOrEmpty(node.InnerHtml)
                     && !node.HasAttributes
                     && !node.HasChildNodes)
                 {

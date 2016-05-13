@@ -82,5 +82,74 @@ namespace Vereyon.Web
             result = sanitizer.Sanitize(input);
             Assert.Equal(expected, result);
         }
+
+        /// <summary>
+        /// Tests is the RemoveEmpty instruction on tag rules is applied as expected.
+        /// </summary>
+        [Fact]
+        public void RemoveEmptyTest()
+        {
+
+            string input, result, expected;
+
+            var sanitizer = new HtmlSanitizer();
+            sanitizer.WhiteListMode = true;
+            sanitizer.Tag("span").RemoveEmpty();
+            sanitizer.Tag("font").RemoveEmpty().AllowAttributes("id");
+
+            // Simply empty tags must be removed if instructed to do so.
+            input = @"<span>Test test<font></font></span>";
+            expected = @"<span>Test test</span>";
+            result = sanitizer.Sanitize(input);
+            Assert.Equal(expected, result);
+
+            // While empty content wise, it does have attributes. It should not simply be removed.
+            input = @"<span>Test test<font id=""test-id""></font></span>";
+            expected = @"<span>Test test<font id=""test-id""></font></span>";
+            result = sanitizer.Sanitize(input);
+            Assert.Equal(expected, result);
+
+            // The font tag is not really empty as it contains a space.
+            input = @"<span>Test test<font> </font></span>";
+            expected = @"<span>Test test<font> </font></span>";
+            result = sanitizer.Sanitize(input);
+            Assert.Equal(expected, result);
+
+            // The font tag is not really empty as it contains a linebreak.
+            input = @"<span>Test test<font>
+</font></span>";
+            expected = @"<span>Test test<font>
+</font></span>";
+            result = sanitizer.Sanitize(input);
+            Assert.Equal(expected, result);
+
+            // The unclosed font tag should not show up at all, and at least be removed because it is empty.
+            input = @"<span>Test test<font></span>";
+            expected = @"<span>Test test</span>";
+            result = sanitizer.Sanitize(input);
+            Assert.Equal(expected, result);
+        }
+
+        /// <summary>
+        /// Tests is the RemoveEmpty instruction on tag rules is applied as expected in cascading cases.
+        /// </summary>
+        [Fact]
+        public void RemoveEmptyCascadedTest()
+        {
+
+            string input, result, expected;
+
+            var sanitizer = new HtmlSanitizer();
+            sanitizer.WhiteListMode = true;
+            sanitizer.Tag("span").RemoveEmpty();
+            sanitizer.Tag("font").RemoveEmpty().AllowAttributes("id"); 
+
+            // The font tag is empty and will be removed. This results in the span tag also being empty, which would
+            // lead one to expect the span tag to be removed completely.
+            input = @"<span><font></font></span>";
+            expected = @"";
+            result = sanitizer.Sanitize(input);
+            Assert.Equal(expected, result);
+        }
     }
 }

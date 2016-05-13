@@ -87,7 +87,7 @@ namespace Vereyon.Web
         }
 
         /// <summary>
-        /// Simple test to check if unclosed tags are cleaned up. Not sure if this is the desired behaviour, but al least the resulting HTML must be clean.
+        /// Simple test to check if unclosed tags are cleaned up. Not sure if this is the desired behaviour, but at least the resulting HTML must be clean.
         /// </summary>
         [Fact]
         public void UnclosedTagsTest()
@@ -99,6 +99,13 @@ namespace Vereyon.Web
             string expected = @"<strong>Not properly closed</strong>";
 
             var output = sanitizer.Sanitize(input);
+            Assert.Equal(expected, output);
+
+            // Also test with an unclosed tag at the end.
+            input = @"<div>The next tag is not properly closed<strong></div>";
+            expected = @"The next tag is not properly closed";
+
+            output = sanitizer.Sanitize(input);
             Assert.Equal(expected, output);
         }
 
