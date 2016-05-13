@@ -59,7 +59,7 @@ namespace Vereyon.Web
         private void RegisterChecks()
         {
 
-            AttributeCheckRegistry.Add(HtmlSanitizerCheckType.Url, new HtmlSanitizerAttributeCheckHandler(LinkHrefCheck));
+            AttributeCheckRegistry.Add(HtmlSanitizerCheckType.Url, new HtmlSanitizerAttributeCheckHandler(UrlCheckHandler));
             AttributeCheckRegistry.Add(HtmlSanitizerCheckType.AllowAttribute, new HtmlSanitizerAttributeCheckHandler(x => SanitizerOperation.DoNothing));
         }
 
@@ -100,13 +100,14 @@ namespace Vereyon.Web
         }
 
         /// <summary>
-        /// Checks if the href attribute contains a valid link.
+        /// Checks if the attribute contains a valid link.
         /// </summary>
         /// <param name="attribute"></param>
         /// <returns></returns>
-        public static SanitizerOperation LinkHrefCheck(HtmlAttribute attribute)
+        public static SanitizerOperation UrlCheckHandler(HtmlAttribute attribute)
         {
-            // Check the url. There's no use in keeping link tags without a link, so flatten the tag on failure.
+
+            // Check the url. We assume that there's no use in keeping for example a link tag without a href, so flatten the tag on failure.
             if (!AttributeUrlCheck(attribute))
                 return SanitizerOperation.FlattenTag;
 

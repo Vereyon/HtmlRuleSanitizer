@@ -51,7 +51,9 @@ namespace Vereyon.Web
         }
 
 
-
+        /// <summary>
+        /// Verifies the functioning of the URL check on src attributes.
+        /// </summary>
         [Fact]
         public void ImgSrcUrlCheckTest()
         {
@@ -67,7 +69,7 @@ namespace Vereyon.Web
             Assert.Equal(expectedIllegal, result);
 
             // Test a legal well formed url
-            var inputLegal = @"<img src=""http://www.google.com/a.png"">>";
+            var inputLegal = @"<img src=""http://www.google.com/a.png"">";
             result = sanitizer.Sanitize(inputLegal);
             Assert.Equal(inputLegal, result);
         }
