@@ -13,7 +13,7 @@ namespace Vereyon.Web
         /// Tests if obviously illegal URL's are caught while obviously legal ones are left alone.
         /// </summary>
         [Fact]
-        public void UrlCheckTest()
+        public void AHrefUrlCheckTest()
         {
 
             string result;
@@ -36,7 +36,7 @@ namespace Vereyon.Web
         /// Regression test for checking if relative URL's are accepted.
         /// </summary>
         [Fact]
-        public void UrlCheckRelativeTest()
+        public void AHrefUrlCheckRelativeTest()
         {
 
             string result;
@@ -46,6 +46,46 @@ namespace Vereyon.Web
             // Test a relative url, which should pass.
             var input = @"<a href=""../relative.htm"">Relative link</a>";
             var expected = @"<a href=""../relative.htm"">Relative link</a>";
+            result = sanitizer.Sanitize(input);
+            Assert.Equal(expected, result);
+        }
+
+
+
+        [Fact]
+        public void ImgSrcUrlCheckTest()
+        {
+
+            string result;
+            var sanitizer = new HtmlSanitizer();
+            sanitizer.Tag("img").CheckAttribute("src", HtmlSanitizerCheckType.Url);
+
+            // Test some illegal href
+            var inputIllegal = @"<img src=""javascript:alert('test')"">";
+            var expectedIllegal = @"";
+            result = sanitizer.Sanitize(inputIllegal);
+            Assert.Equal(expectedIllegal, result);
+
+            // Test a legal well formed url
+            var inputLegal = @"<img src=""http://www.google.com/a.png"">>";
+            result = sanitizer.Sanitize(inputLegal);
+            Assert.Equal(inputLegal, result);
+        }
+
+        /// <summary>
+        /// Regression test for checking if relative URL's are accepted.
+        /// </summary>
+        [Fact]
+        public void ImgSrcUrlCheckRelativeTest()
+        {
+
+            string result;
+            var sanitizer = new HtmlSanitizer();
+            sanitizer.Tag("img").CheckAttribute("src", HtmlSanitizerCheckType.Url);
+
+            // Test a relative url, which should pass.
+            var input = @"<img src=""../relative.png"">";
+            var expected = @"<img src=""../relative.png"">";
             result = sanitizer.Sanitize(input);
             Assert.Equal(expected, result);
         }
