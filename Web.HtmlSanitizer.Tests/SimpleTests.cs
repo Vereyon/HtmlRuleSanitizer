@@ -142,5 +142,25 @@ namespace Vereyon.Web
             var output = sanitizer.Sanitize(input);
             Assert.Equal(expected, output);
         }
+
+        /// <summary>
+        /// Tests if HTML characters are correctly escaped.
+        /// https://www.w3.org/International/questions/qa-escapes#use
+        /// </summary>
+        [Fact]
+        public void EscapeCharactersTest()
+        {
+
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+            sanitizer.RemoveComments = false;
+
+            // The extra greater than characters are going to get lost because the tags are malformed.
+            // I would say this is sort of to be expected.
+            string input = @"<<p>"">&lt;test<</p>"" test";
+            string expected = @"<p>&quot;&gt;&lt;test</p>&quot; test";
+
+            var output = sanitizer.Sanitize(input);
+            Assert.Equal(expected, output);
+        }
     }
 }

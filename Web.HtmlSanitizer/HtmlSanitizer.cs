@@ -43,9 +43,15 @@ namespace Vereyon.Web
         /// </summary>
         public bool WhiteListMode { get; set; }
 
+        /// <summary>
+        /// Gets / sets if HTML entities in all text should be encoded.
+        /// </summary>
+        public bool EncodeHtmlEntities { get; set; }
+
         public HtmlSanitizer()
         {
             WhiteListMode = true;
+            EncodeHtmlEntities = true;
             AllowedCssClasses = new List<string>();
             Rules = new Dictionary<string, HtmlSanitizerTagRule>();
             AttributeCheckRegistry = new Dictionary<HtmlSanitizerCheckType, HtmlSanitizerAttributeCheckHandler>();
@@ -148,6 +154,19 @@ namespace Vereyon.Web
             if (node.NodeType == HtmlNodeType.Comment && RemoveComments)
             {
                 node.Remove();
+                return;
+            }
+
+            // In theory all text should have HTML entities (ampersand, quotes, lessthan, greaterthan) encoded.
+            // In practice or in case of an attack this may not be the case. Make sure all entities are encoded, but avoid 
+            // double encoding correctly encoded entities. Do so by first decoding entities and then encode entities
+            // in the complete text.
+            if (node.NodeType == HtmlNodeType.Text && EncodeHtmlEntities)
+            {
+                var dentitized = HtmlEntity.DeEntitize(node.InnerText);
+                var entitized = HtmlEntity.Entitize(dentitized, true, true);
+                var replacement = HtmlTextNode.CreateNode(entitized);
+                node.ParentNode.ReplaceChild(replacement, node);
                 return;
             }
 

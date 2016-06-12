@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="AttributeCheckTests.cs" />
     <Compile Include="CssWhitelistTests.cs" />
+    <Compile Include="OwaspXssTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="RuleTests.cs" />
     <Compile Include="SimpleTests.cs" />
