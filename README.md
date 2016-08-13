@@ -10,16 +10,14 @@ var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
 string cleanHtml = sanitizer.Sanitize(dirtyHtml);
 ```
 
-Without configuration HtmlRuleSanitizer will strip absolutely everything. This ensures that you are in control of what HTML is getting through.
-
-It was inspired by the client side parser of the wysihtml5 editor.
+Without configuration HtmlRuleSanitizer will strip absolutely everything. This ensures that you are in control of what HTML is getting through. It was inspired by the client side parser of the wysihtml5 editor.
 
 Use cases
 ---------
 
 HtmlRuleSanitizer was designed with the following use cases in mind:
 
- * Prevent cross-site scripting by removing javascript.
+ * Prevent cross-site scripting (XSS) attacks by removing javascript and other maliscious HTML fragements.
  * Restrict HTML to simple markup in order to allow for easy transformation to other document types without having to deal with all possible HTML tags.
  * Enforce nofollow on links to discourage link spam.
  * Cleanup submitted HTML by removing empty tags for example.
@@ -36,6 +34,7 @@ Features
  * Tag renaming
  * Attribute checks (e.g. URL validity) and white listing
  * A fluent style configuration interface
+ * HTML entity encoding
  
 Usage
 -----
