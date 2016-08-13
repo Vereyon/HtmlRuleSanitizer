@@ -21,7 +21,7 @@ namespace Vereyon.Web
             string expected = @"<h1>Heading</h1>
 <p>Some comments</p>
 
-<p><a href=""http://www.vereyon.com/"" target=""_blank"" rel=""nofollow"">Nofollow legal link</a> and here's another one: Obviously I'm illegal</p>";
+<p><a href=""http://www.vereyon.com/"" target=""_blank"" rel=""nofollow"">Nofollow legal link</a> and here&#39;s another one: Obviously I&#39;m illegal</p>";
 
             var output = sanitizer.Sanitize(input);
             Assert.Equal(expected, output);
@@ -46,7 +46,7 @@ namespace Vereyon.Web
     <h1>Heading</h1>
     <p>Some comments</p>
     
-    <p><a href=""http://www.vereyon.com/"" target=""_blank"" rel=""nofollow"">Nofollow legal link</a> and here's another one: Obviously I'm illegal</p>
+    <p><a href=""http://www.vereyon.com/"" target=""_blank"" rel=""nofollow"">Nofollow legal link</a> and here&#39;s another one: Obviously I&#39;m illegal</p>
 </body>
 </html>";
 
@@ -144,7 +144,7 @@ namespace Vereyon.Web
         }
 
         /// <summary>
-        /// Tests if HTML characters are correctly escaped.
+        /// Tests if HTML entities are correctly escaped.
         /// https://www.w3.org/International/questions/qa-escapes#use
         /// </summary>
         [Fact]

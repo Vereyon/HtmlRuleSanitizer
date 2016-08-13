@@ -612,9 +612,9 @@ href=""http://www.vereyon.com/"">Link</a><o:p></o:p></i></p>
 
 <h2><span>Heading</span> <span>two</span></h2>
 
-<p><span><strong>Bold</strong></span><strong></strong></p>
+<p><span><strong>Bold</strong></span></p>
 
-<p><span><i>Italic</i></span><i></i></p>
+<p><span><i>Italic</i></span></p>
 
 <p><i><a href=""http://www.vereyon.com/"" target=""_blank"" rel=""nofollow"">Link</a></i></p>
 
