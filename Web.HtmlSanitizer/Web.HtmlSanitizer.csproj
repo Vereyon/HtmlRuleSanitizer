@@ -46,6 +46,7 @@
     <Compile Include="HtmlSanitizer.cs" />
     <Compile Include="HtmlSanitizerFluentHelper.cs" />
     <Compile Include="HtmlSanitizerTagRule.cs" />
+    <Compile Include="IHtmlSanitizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

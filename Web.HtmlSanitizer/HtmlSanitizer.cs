@@ -14,7 +14,7 @@ namespace Vereyon.Web
     /// Inspired by: https://htmlagilitypack.codeplex.com/discussions/215674
     ///         and: https://github.com/xing/wysihtml5/blob/master/parser_rules/simple.js
     /// </remarks>
-    public class HtmlSanitizer
+    public class HtmlSanitizer : IHtmlSanitizer
     {
 
         /// <summary>
@@ -76,6 +76,9 @@ namespace Vereyon.Web
         /// <returns></returns>
         public delegate SanitizerOperation HtmlSanitizerAttributeCheckHandler(HtmlAttribute attribute);
 
+        /// <summary>
+        /// Collection of the allowed URI schemes.
+        /// </summary>
         public static IEnumerable<string> AllowedUriSchemes = new string[] { "http", "https" };
 
         /// <summary>
@@ -121,10 +124,10 @@ namespace Vereyon.Web
         }
 
         /// <summary>
-        /// Sanitizes the passed HTML.
+        /// Sanitizes the passed HTML string and returns the sanitized HTML.
         /// </summary>
-        /// <param name="html"></param>
-        /// <returns></returns>
+        /// <param name="html">A string containing HTML formatted text.</param>
+        /// <returns>A string containing sanitized HTML formatted text.</returns>
         public string Sanitize(string html)
         {
 
@@ -163,8 +166,10 @@ namespace Vereyon.Web
             // in the complete text.
             if (node.NodeType == HtmlNodeType.Text && EncodeHtmlEntities)
             {
-                var dentitized = HtmlEntity.DeEntitize(node.InnerText);
-                var entitized = HtmlEntity.Entitize(dentitized, true, true);
+                var deentitized = WebUtility.HtmlDecode(node.InnerText);
+
+                // Unfortunately also unicode characters are encoded, which is not really necessary.
+                var entitized = WebUtility.HtmlEncode(deentitized);
                 var replacement = HtmlTextNode.CreateNode(entitized);
                 node.ParentNode.ReplaceChild(replacement, node);
                 return;
@@ -246,6 +251,19 @@ namespace Vereyon.Web
 
             // Finally process any child nodes recursively.
             SanitizeChildren(node);
+
+            // If the tag is empty and the rule instructs the removal of empty tag, remove the node. We are doing
+            // this again because at this point the node may have become empty.
+            if (rule != null)
+            {
+                if (rule.RemoveEmpty
+                    && !node.HasAttributes
+                    && !node.HasChildNodes)
+                {
+                    node.Remove();
+                    return;
+                }
+            }
         }
 
         /// <summary>
