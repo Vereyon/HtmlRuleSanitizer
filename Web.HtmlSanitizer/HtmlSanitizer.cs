@@ -48,6 +48,16 @@ namespace Vereyon.Web
         /// </summary>
         public bool EncodeHtmlEntities { get; set; }
 
+        /// <summary>
+        /// Gets / sets the maximum depth in the DOM tree which is traversed. This limit is introduced to prevent stack overflows.
+        /// </summary>
+        /// <remarks>
+        /// Problems tend to start above a recursion depth of about 75 where the ASP.NET runtime stack nears exhaustion.
+        /// </remarks>
+        public int MaxRecursionDepth { get; set; }
+
+        internal int Depth { get; set; }
+
         public HtmlSanitizer()
         {
             WhiteListMode = true;
@@ -55,6 +65,8 @@ namespace Vereyon.Web
             AllowedCssClasses = new List<string>();
             Rules = new Dictionary<string, HtmlSanitizerTagRule>();
             AttributeCheckRegistry = new Dictionary<HtmlSanitizerCheckType, HtmlSanitizerAttributeCheckHandler>();
+            MaxRecursionDepth = 75;
+            Depth = 0;
 
             RegisterChecks();
         }
@@ -153,115 +165,121 @@ namespace Vereyon.Web
             HtmlSanitizerTagRule rule;
             SanitizerOperation operation;
 
-            // Remove any comment nodes if instructed to do so.
-            if (node.NodeType == HtmlNodeType.Comment && RemoveComments)
-            {
-                node.Remove();
-                return;
-            }
-
-            // In theory all text should have HTML entities (ampersand, quotes, lessthan, greaterthan) encoded.
-            // In practice or in case of an attack this may not be the case. Make sure all entities are encoded, but avoid 
-            // double encoding correctly encoded entities. Do so by first decoding entities and then encode entities
-            // in the complete text.
-            if (node.NodeType == HtmlNodeType.Text && EncodeHtmlEntities)
-            {
-                var deentitized = WebUtility.HtmlDecode(node.InnerText);
-
-                // Unfortunately also unicode characters are encoded, which is not really necessary.
-                var entitized = WebUtility.HtmlEncode(deentitized);
-                var replacement = HtmlTextNode.CreateNode(entitized);
-                node.ParentNode.ReplaceChild(replacement, node);
-                return;
-            }
-
-            // Only further process element nodes (includes the root document).
-            if (node.NodeType != HtmlNodeType.Element
-                && node.NodeType != HtmlNodeType.Document)
-                return;
-
-            // Make sure the tag name is all small caps. HTML5 does not have any
-            // capitalized letters in it's tag names.
-            node.Name = node.Name.ToLowerInvariant();
-
-            // Lookup the rule for this node (may be null). If we are in white list mode and no rule is found,
-            // remove the node. Don't remove the document however.
-            if (!Rules.TryGetValue(node.Name, out rule)
-                && WhiteListMode && node.NodeType != HtmlNodeType.Document)
-            {
-                node.Remove();
-                return;
-            }
-
-            if (rule != null)
+            using (new RecursionGuard(this))
             {
 
-                // Apply the global node operation. Quit if it was removed.
-                if (!ApplyNodeOperation(node, rule.Operation))
-                    return;
-
-                // If the tag is empty and the rule instructs the removal of empty tag, remove the node.
-                if (rule.RemoveEmpty
-                    && !node.HasAttributes
-                    && !node.HasChildNodes)
+                // Remove any comment nodes if instructed to do so.
+                if (node.NodeType == HtmlNodeType.Comment && RemoveComments)
                 {
                     node.Remove();
                     return;
                 }
 
-                // Rename the tag if the rule dictates so.
-                if (!string.IsNullOrEmpty(rule.RenameTag))
-                    node.Name = rule.RenameTag;
-            }
-
-            // Sanitize every attribute of the node in reverse order.
-            for (int i = node.Attributes.Count - 1; i >= 0; i--)
-            {
-                operation = SanitizeAttribute(node.Attributes[i], rule);
-                if (!ApplyNodeOperation(node, operation))
-                    return;
-            }
-
-            if (rule != null)
-            {
-
-                // Add the css class if specified by the rule. This needs to be done after sanitizing 
-                // the attributes as specified class may not be white listed.
-                if (!string.IsNullOrEmpty(rule.SetClass))
+                // In theory all text should have HTML entities (ampersand, quotes, lessthan, greaterthan) encoded.
+                // In practice or in case of an attack this may not be the case. Make sure all entities are encoded, but avoid 
+                // double encoding correctly encoded entities. Do so by first decoding entities and then encode entities
+                // in the complete text.
+                if (node.NodeType == HtmlNodeType.Text && EncodeHtmlEntities)
                 {
-                    var className = node.GetAttributeValue("class", string.Empty);
-                    if (string.IsNullOrEmpty(className))
-                        className = rule.SetClass;
-                    else
-                        className += " " + rule.SetClass;
-                    node.SetAttributeValue("class", className);
+                    var deentitized = WebUtility.HtmlDecode(node.InnerText);
+
+                    // Unfortunately also unicode characters are encoded, which is not really necessary.
+                    var entitized = WebUtility.HtmlEncode(deentitized);
+                    var replacement = HtmlTextNode.CreateNode(entitized);
+                    node.ParentNode.ReplaceChild(replacement, node);
+                    return;
                 }
 
-                // If the node does not have any attributes, see if we need to do anything with it.
-                if (node.Attributes.Count == 0)
+                // Only further process element nodes (includes the root document).
+                if (node.NodeType != HtmlNodeType.Element
+                    && node.NodeType != HtmlNodeType.Document)
+                    return;
+
+                // Make sure the tag name is all small caps. HTML5 does not have any
+                // capitalized letters in it's tag names.
+                node.Name = node.Name.ToLowerInvariant();
+
+                // Lookup the rule for this node (may be null). If we are in white list mode and no rule is found,
+                // remove the node. Don't remove the document however.
+                if (!Rules.TryGetValue(node.Name, out rule)
+                    && WhiteListMode && node.NodeType != HtmlNodeType.Document)
                 {
-                    if (!ApplyNodeOperation(node, rule.NoAttributesOperation))
+                    node.Remove();
+                    return;
+                }
+
+                if (rule != null)
+                {
+
+                    // Apply the global node operation. Quit if it was removed.
+                    if (!ApplyNodeOperation(node, rule.Operation))
+                        return;
+
+                    // If the tag is empty and the rule instructs the removal of empty tag, remove the node.
+                    if (rule.RemoveEmpty
+                        && !node.HasAttributes
+                        && !node.HasChildNodes)
+                    {
+                        node.Remove();
+                        return;
+                    }
+
+                    // Rename the tag if the rule dictates so.
+                    if (!string.IsNullOrEmpty(rule.RenameTag))
+                        node.Name = rule.RenameTag;
+                }
+
+                // Sanitize every attribute of the node in reverse order.
+                for (int i = node.Attributes.Count - 1; i >= 0; i--)
+                {
+                    operation = SanitizeAttribute(node.Attributes[i], rule);
+                    if (!ApplyNodeOperation(node, operation))
                         return;
                 }
 
-                // Ensure that all attributes are set according to the rule.
-                foreach (var setAttribute in rule.SetAttributes.Where(r => !node.Attributes.Contains(r.Key)))
-                    node.Attributes.Add(setAttribute.Key, setAttribute.Value);
-            }
-
-            // Finally process any child nodes recursively.
-            SanitizeChildren(node);
-
-            // If the tag is empty and the rule instructs the removal of empty tag, remove the node. We are doing
-            // this again because at this point the node may have become empty.
-            if (rule != null)
-            {
-                if (rule.RemoveEmpty
-                    && !node.HasAttributes
-                    && !node.HasChildNodes)
+                if (rule != null)
                 {
-                    node.Remove();
-                    return;
+
+                    // Add the css class if specified by the rule. This needs to be done after sanitizing 
+                    // the attributes as specified class may not be white listed.
+                    if (!string.IsNullOrEmpty(rule.SetClass))
+                    {
+                        var className = node.GetAttributeValue("class", string.Empty);
+                        if (string.IsNullOrEmpty(className))
+                            className = rule.SetClass;
+                        else
+                            className += " " + rule.SetClass;
+                        node.SetAttributeValue("class", className);
+                    }
+
+                    // If the node does not have any attributes, see if we need to do anything with it.
+                    if (node.Attributes.Count == 0)
+                    {
+                        if (!ApplyNodeOperation(node, rule.NoAttributesOperation))
+                            return;
+                    }
+
+                    // Ensure that all attributes are set according to the rule.
+                    foreach (var setAttribute in rule.SetAttributes.Where(r => !node.Attributes.Contains(r.Key)))
+                        node.Attributes.Add(setAttribute.Key, setAttribute.Value);
+                }
+
+                // Finally process any child nodes recursively.
+                // Do this in reverse to allow removal of nodes without hassle.
+                for (int i = node.ChildNodes.Count - 1; i >= 0; i--)
+                    SanitizeNode(node.ChildNodes[i]);
+
+                // If the tag is empty and the rule instructs the removal of empty tag, remove the node. We are doing
+                // this again because at this point the node may have become empty.
+                if (rule != null)
+                {
+                    if (rule.RemoveEmpty
+                        && !node.HasAttributes
+                        && !node.HasChildNodes)
+                    {
+                        node.Remove();
+                        return;
+                    }
                 }
             }
         }
@@ -279,7 +297,10 @@ namespace Vereyon.Web
                 case SanitizerOperation.FlattenTag:
 
                     // Sanitize children, then insert them after this node and remove this node.
-                    SanitizeChildren(node);
+                    // Do this in reverse to allow removal of nodes without hassle.
+                    for (int i = node.ChildNodes.Count - 1; i >= 0; i--)
+                        SanitizeNode(node.ChildNodes[i]);
+
                     foreach (var child in node.ChildNodes)
                         node.ParentNode.InsertBefore(child, node);
                     node.Remove();
@@ -295,14 +316,6 @@ namespace Vereyon.Web
                 default:
                     throw new InvalidOperationException("Unsupported sanitation operation.");
             }
-        }
-
-        private void SanitizeChildren(HtmlNode node)
-        {
-
-            // Do this in reverse to allow removal of nodes without hassle.
-            for (int i = node.ChildNodes.Count - 1; i >= 0; i--)
-                SanitizeNode(node.ChildNodes[i]);
         }
 
         private SanitizerOperation SanitizeAttribute(HtmlAttribute attribute, HtmlSanitizerTagRule rule)

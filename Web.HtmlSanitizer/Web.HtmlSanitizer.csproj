@@ -48,6 +48,7 @@
     <Compile Include="HtmlSanitizerTagRule.cs" />
     <Compile Include="IHtmlSanitizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecursionGuard.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
