@@ -17,7 +17,7 @@ Use cases
 
 HtmlRuleSanitizer was designed with the following use cases in mind:
 
- * Prevent cross-site scripting (XSS) attacks by removing javascript and other maliscious HTML fragements.
+ * Prevent cross-site scripting (XSS) attacks by removing javascript and other malicious HTML fragments.
  * Restrict HTML to simple markup in order to allow for easy transformation to other document types without having to deal with all possible HTML tags.
  * Enforce nofollow on links to discourage link spam.
  * Cleanup submitted HTML by removing empty tags for example.

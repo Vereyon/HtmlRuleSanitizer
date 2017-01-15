@@ -79,7 +79,7 @@ namespace Vereyon.Web
         /// <summary>
         /// Collection of the allowed URI schemes.
         /// </summary>
-        public static IEnumerable<string> AllowedUriSchemes = new string[] { "http", "https" };
+        public static IEnumerable<string> AllowedUriSchemes = new string[] { "http", "https", "mailto" };
 
         /// <summary>
         /// Checks if the passed HTML attribute contains a valid URL.
