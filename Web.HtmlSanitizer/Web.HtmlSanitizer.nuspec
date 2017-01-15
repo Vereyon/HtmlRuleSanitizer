@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Vereyon.Web.HtmlSanitizer</id>
-    <version>1.2.0.0</version>
+    <version>1.2.1.0</version>
     <title>HtmlRuleSanitizer</title>
     <authors>Vereyon</authors>
     <owners>Vereyon</owners>
@@ -10,8 +10,8 @@
     <projectUrl>https://github.com/Vereyon/HtmlRuleSanitizer</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Rule based HTML sanitizer using a white list. Documentation at: https://github.com/Vereyon/HtmlRuleSanitizer</description>
-    <releaseNotes>Fixed unclosed tags not being handled correctly. Added url checks for src attributes.</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <releaseNotes>Added mailto: to default allowed uri schemes.</releaseNotes>
+    <copyright>Copyright 2017</copyright>
     <tags>ASP.NET MVC HTML sanitizer XSS antixss anti security</tags>
   </metadata>
 </package>
