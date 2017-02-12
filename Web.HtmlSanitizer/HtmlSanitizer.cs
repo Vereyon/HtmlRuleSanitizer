@@ -16,7 +16,11 @@ namespace Vereyon.Web
     /// </remarks>
     public class HtmlSanitizer : IHtmlSanitizer
     {
-
+        /// <summary>
+        /// Determines if CSS classes are sanitized.
+        /// </summary>
+        public bool SanitizeCssClasses { get; set; }
+        
         /// <summary>
         /// Sets which CSS classes are allowed on any HTML tag.
         /// </summary>
@@ -62,6 +66,7 @@ namespace Vereyon.Web
         {
             WhiteListMode = true;
             EncodeHtmlEntities = true;
+            SanitizeCssClasses = true;
             AllowedCssClasses = new List<string>();
             Rules = new Dictionary<string, HtmlSanitizerTagRule>();
             AttributeCheckRegistry = new Dictionary<HtmlSanitizerCheckType, HtmlSanitizerAttributeCheckHandler>();
@@ -326,7 +331,7 @@ namespace Vereyon.Web
             
             // Apply global CSS class whitelist. If the attribute is complete removed, we are done.
             // TODO: Implement this as a global attribute check?
-            if (attribute.Name == "class")
+            if (SanitizeCssClasses && attribute.Name == "class")
             {
                 if (!ApplyCssWhitelist(attribute))
                     return SanitizerOperation.DoNothing;
