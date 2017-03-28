@@ -446,8 +446,12 @@ namespace Vereyon.Web
             sanitizer.Tag("div").NoAttributes(SanitizerOperation.FlattenTag);
             sanitizer.Tag("span").RemoveEmpty();
             sanitizer.Tag("ul");
-            sanitizer.Tag("ol");
-            sanitizer.Tag("li");
+            sanitizer.Tag("ol")
+                .AllowAttributes("start")
+                .AllowAttributes("type")
+                .AllowAttributes("reversed");
+            sanitizer.Tag("li")
+                .AllowAttributes("value");
             sanitizer.Tag("a").SetAttribute("target", "_blank")
                 .SetAttribute("rel", "nofollow")
                 .CheckAttribute("href", HtmlSanitizerCheckType.Url)
