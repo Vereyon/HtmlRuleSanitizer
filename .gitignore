@@ -4,3 +4,5 @@
 /Web.HtmlSanitizer.Tests/bin
 /Web.HtmlSanitizer/*.nupkg
 /Web.HtmlSanitizer/NuGet-Signed.exe
+/.vs
+/packages

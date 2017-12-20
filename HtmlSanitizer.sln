@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8FE9055F-68BC-4427-A536-64CE4E324989}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Web.HtmlSanitizer.NETStandard", "Web.HtmlSanitizer.NETStandard\Web.HtmlSanitizer.NETStandard.xproj", "{A2E4947F-64FF-4DDB-A9A4-735615913367}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.HtmlSanitizer", "Web.HtmlSanitizer\Web.HtmlSanitizer.csproj", "{347A800B-BC19-4C3D-81B9-8E0D3FA839DE}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Web.HtmlSanitizer.NETStandard.Tests", "Web.HtmlSanitizer.NETStandard.Tests\Web.HtmlSanitizer.NETStandard.Tests.xproj", "{52A3B5F1-8793-4A84-B562-FF7CDFD9BE95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.HtmlSanitizer.Tests", "Web.HtmlSanitizer.Tests\Web.HtmlSanitizer.Tests.csproj", "{B94BB0A9-399E-4CB4-8564-CC69D6CB584D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2E4947F-64FF-4DDB-A9A4-735615913367}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2E4947F-64FF-4DDB-A9A4-735615913367}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2E4947F-64FF-4DDB-A9A4-735615913367}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2E4947F-64FF-4DDB-A9A4-735615913367}.Release|Any CPU.Build.0 = Release|Any CPU
+		{347A800B-BC19-4C3D-81B9-8E0D3FA839DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{347A800B-BC19-4C3D-81B9-8E0D3FA839DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{347A800B-BC19-4C3D-81B9-8E0D3FA839DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{347A800B-BC19-4C3D-81B9-8E0D3FA839DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52A3B5F1-8793-4A84-B562-FF7CDFD9BE95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52A3B5F1-8793-4A84-B562-FF7CDFD9BE95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52A3B5F1-8793-4A84-B562-FF7CDFD9BE95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52A3B5F1-8793-4A84-B562-FF7CDFD9BE95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B94BB0A9-399E-4CB4-8564-CC69D6CB584D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B94BB0A9-399E-4CB4-8564-CC69D6CB584D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B94BB0A9-399E-4CB4-8564-CC69D6CB584D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B94BB0A9-399E-4CB4-8564-CC69D6CB584D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
