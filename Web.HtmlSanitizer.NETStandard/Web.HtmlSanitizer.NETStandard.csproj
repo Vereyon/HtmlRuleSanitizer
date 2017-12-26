@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard1.3</TargetFramework>
+	
+	<AssemblyName>Vereyon.Web.HtmlSanitizer</AssemblyName>
+	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	<PostBuildEvent>del /f /q ..\Nuget\lib\NetStandard1_3\*
+copy bin\Release\netstandard1.3\Web.HtmlSanitizer.NETStandard.dll ..\Nuget\lib\NetStandard1_3\*</PostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.5.0" />
+    <Compile Include="..\Web.HtmlSanitizer\*.cs" />
+  </ItemGroup>
+</Project>
