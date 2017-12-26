@@ -40,6 +40,11 @@ Usage
 -----
 
 Install the [HtmlRuleSanitizer NuGet package](https://www.nuget.org/packages/Vereyon.Web.HtmlSanitizer/).
+Optionally add the following ```using``` statement in the file where you intend to use HtmlRuleSanitizer:
+
+```C#
+using Vereyon.Web;
+```
 
 ### Basic usage
 
