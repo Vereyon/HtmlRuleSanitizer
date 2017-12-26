@@ -10,8 +10,18 @@
     <projectUrl>https://github.com/Vereyon/HtmlRuleSanitizer</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Rule based HTML sanitizer using a white list. Documentation at: https://github.com/Vereyon/HtmlRuleSanitizer</description>
-    <releaseNotes>Net standard / Net core compatible release.</releaseNotes>
-    <copyright>Copyright 2017</copyright>
+    <releaseNotes>First NET Standard / NET Core compatible release. No functional changes.</releaseNotes>
+    <copyright>Copyright 2018</copyright>
     <tags>ASP.NET MVC HTML sanitizer XSS antixss anti security</tags>
+	
+	<dependencies>
+		<group targetFramework="net40">
+			<dependency id="HtmlAgilityPack" version="1.5.0" />
+		</group>
+		
+		<group targetFramework="netstandard1.3">
+			<dependency id="HtmlAgilityPack" version="1.5.0" />
+		</group>
+	</dependencies>
   </metadata>
 </package>

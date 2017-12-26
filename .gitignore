@@ -2,7 +2,11 @@
 /Web.HtmlSanitizer/bin
 /Web.HtmlSanitizer.Tests/obj
 /Web.HtmlSanitizer.Tests/bin
+/Web.HtmlSanitizer.NETStandard/obj
+/Web.HtmlSanitizer.NETStandard/bin
+/Web.HtmlSanitizer.NETStandard.Tests/obj
+/Web.HtmlSanitizer.NETStandard.Tests/bin
 /Nuget/*.nupkg
-/Nuget/NuGet-Signed.exe
+/Nuget/lib/*.dll
 /.vs
 /packages
