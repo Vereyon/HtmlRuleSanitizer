@@ -31,12 +31,11 @@ namespace Vereyon.Web
             return sanitizer;
         }
 
-        /// <summary>
-        /// White lists the specified space seperated CSS class names.
-        /// </summary>
-        /// <param name="className"></param>
-        /// <returns></returns>
-        public static HtmlSanitizer AllowCss(this HtmlSanitizer sanitizer, string classNames)
+		/// <summary>White lists the specified space seperated CSS class names.</summary>
+		/// <param name="sanitizer">The sanitizer.</param>
+		/// <param name="classNames">The class names.</param>
+		/// <returns></returns>
+		public static HtmlSanitizer AllowCss(this HtmlSanitizer sanitizer, string classNames)
         {
             return sanitizer.AllowCss(classNames.Split(' '));
         }
@@ -53,14 +52,15 @@ namespace Vereyon.Web
             return sanitizer.Tag(tagName, true);
         }
 
-        /// <summary>
-        /// White lists the specified HTML tag, creating a rule for it which allows further specification of what is to be done
-        /// with the tag.
-        /// </summary>
-        /// <param name="sanitizer"></param>
-        /// <param name="tagName"></param>
-        /// <returns></returns>
-        public static HtmlSanitizerTagRule Tag(this HtmlSanitizer sanitizer, string tagName, bool replace)
+		/// <summary>
+		/// White lists the specified HTML tag, creating a rule for it which allows further specification of what is to be done
+		/// with the tag.
+		/// </summary>
+		/// <param name="sanitizer">The sanitizer.</param>
+		/// <param name="tagName">Name of the tag.</param>
+		/// <param name="replace">if set to <c>true</c> replace.</param>
+		/// <returns></returns>
+		public static HtmlSanitizerTagRule Tag(this HtmlSanitizer sanitizer, string tagName, bool replace)
         {
 
             HtmlSanitizerTagRule rule;
@@ -176,12 +176,11 @@ namespace Vereyon.Web
             return rule;
         }
 
-        /// <summary>
-        /// Specifies the operation to perform if this node does not have any attributes set.
-        /// </summary>
-        /// <param name="rule"></param>
-        /// <returns></returns>
-        public static HtmlSanitizerTagRule NoAttributes(this HtmlSanitizerTagRule rule, SanitizerOperation operation)
+		/// <summary>Specifies the operation to perform if this node does not have any attributes set.</summary>
+		/// <param name="rule">The rule.</param>
+		/// <param name="operation">The operation.</param>
+		/// <returns></returns>
+		public static HtmlSanitizerTagRule NoAttributes(this HtmlSanitizerTagRule rule, SanitizerOperation operation)
         {
             rule.NoAttributesOperation = operation;
             return rule;

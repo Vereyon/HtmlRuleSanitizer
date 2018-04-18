@@ -61,7 +61,8 @@ namespace Vereyon.Web
 
         internal int Depth { get; set; }
 
-        public HtmlSanitizer()
+		/// <summary>Initializes a new instance of the <see cref="HtmlSanitizer"/> class.</summary>
+		public HtmlSanitizer()
         {
             WhiteListMode = true;
             EncodeHtmlEntities = true;
@@ -163,7 +164,9 @@ namespace Vereyon.Web
             return htmlDocument.DocumentNode.WriteTo();
         }
 
-        public void SanitizeNode(HtmlNode node)
+		/// <summary>Sanitizes the node.</summary>
+		/// <param name="node">The node.</param>
+		public void SanitizeNode(HtmlNode node)
         {
 
             HtmlSanitizerTagRule rule;
@@ -397,7 +400,7 @@ namespace Vereyon.Web
             {
 
                 // No empty or white space classes.
-                if (string.IsNullOrWhiteSpace(cssClass))
+                if (string.IsNullOrEmpty(cssClass?.Trim()))
                     continue;
 
                 // Only allowed classes.
@@ -476,7 +479,10 @@ namespace Vereyon.Web
         }
     }
 
-    public enum HtmlSanitizerCheckType
+	/// <summary>
+	/// Types of sanitizations.
+	/// </summary>
+	public enum HtmlSanitizerCheckType
     {
 
         /// <summary>
