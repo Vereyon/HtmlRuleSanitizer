@@ -13,7 +13,10 @@ namespace Vereyon.Web
 
         private HtmlSanitizer _sanitizer;
 
-        public RecursionGuard(HtmlSanitizer sanitizer)
+		/// <summary>Initializes a new instance of the <see cref="RecursionGuard"/> class.</summary>
+		/// <param name="sanitizer">The sanitizer.</param>
+		/// <exception cref="System.InvalidOperationException">Maximum recursion depth execeeded.</exception>
+		public RecursionGuard(HtmlSanitizer sanitizer)
         {
 
             _sanitizer = sanitizer;
@@ -23,11 +26,16 @@ namespace Vereyon.Web
                 throw new InvalidOperationException("Maximum recursion depth execeeded.");
         }
 
-        public void Dispose()
+		/// <summary>
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+		/// </summary>
+		public void Dispose()
         {
             _sanitizer.Depth--;
         }
 
-        public int Depth { get { return _sanitizer.Depth; } }
+		/// <summary>Gets the depth.</summary>
+		/// <value>The depth.</value>
+		public int Depth { get { return _sanitizer.Depth; } }
     }
 }
