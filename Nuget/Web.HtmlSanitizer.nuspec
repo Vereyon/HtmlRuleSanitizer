@@ -16,11 +16,11 @@
 	
 	<dependencies>
 		<group targetFramework="net40">
-			<dependency id="HtmlAgilityPack" version="1.5.0" />
+			<dependency id="HtmlAgilityPack" version="1.8.11" />
 		</group>
 		
-		<group targetFramework="netstandard1.3">
-			<dependency id="HtmlAgilityPack" version="1.5.0" />
+		<group targetFramework="netstandard2.0">
+			<dependency id="HtmlAgilityPack" version="1.8.11" />
 		</group>
 	</dependencies>
   </metadata>
