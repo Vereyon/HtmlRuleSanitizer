@@ -157,7 +157,7 @@ namespace Vereyon.Web
             // The extra greater than characters are going to get lost because the tags are malformed.
             // I would say this is sort of to be expected.
             string input = @"<<p>"">&lt;test<</p>"" test";
-            string expected = @"<p>&quot;&gt;&lt;test</p>&quot; test";
+            string expected = @"&lt;<p>&quot;&gt;&lt;test&lt;</p>&quot; test";
 
             var output = sanitizer.Sanitize(input);
             Assert.Equal(expected, output);
