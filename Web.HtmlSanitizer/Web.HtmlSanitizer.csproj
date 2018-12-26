@@ -23,6 +23,7 @@
     <IncludeSource>true</IncludeSource>
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReleaseNotes>Fixed issue where disabling the white list does not work as intended.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DocumentationFile>bin\Release\$(TargetFramework)\Vereyon.Web.HtmlSanitizer.xml</DocumentationFile>

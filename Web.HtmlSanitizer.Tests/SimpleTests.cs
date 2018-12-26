@@ -163,6 +163,9 @@ namespace Vereyon.Web
             Assert.Equal(expected, output);
         }
 
+        /// <summary>
+        /// Verifies is disabling the white list works as intended.
+        /// </summary>
         [Fact]
         public void WhitelistFalse() 
         {
@@ -174,6 +177,9 @@ namespace Vereyon.Web
     <p><a href=""http://www.vereyon.com/"">Nofollow legal link</a> and here's another one: <a href=""javascript:alert('test')"">Obviously I'm illegal</a></p>
 </body>
 </html>";
+
+            // The script tag is going to be preserved because we are not running on the white list.
+            // The second link is going to be dropped due to an invalid href attribute value.
             string expected = @"<html>
 <body>
     <h1>Heading</h1>
