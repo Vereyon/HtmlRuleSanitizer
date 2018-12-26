@@ -1,6 +1,6 @@
 ﻿{
   "projects": [ "Web.HtmlSanitizer.NETStandard", "Web.HtmlSanitizer.NETStandard.Tests" ],
   "sdk": {
-    "version": "2.2.100"
+    "version": "2.1.200"
   }
 }

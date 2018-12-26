@@ -84,7 +84,7 @@ Contributing
 
 ### Setup
 
-Using .Net Core
+Using .NET Core
 ```
 dotnet restore
 ```
@@ -93,9 +93,9 @@ dotnet restore
 
 Got tests? Yes, see the tests project. It uses xUnit.
 
-Using .Net Core
+Using .NET Core
 ```
-cd Web.HtmlSanitizer.NETStandard.Tests/
+cd Web.HtmlSanitizer.Tests/
 dotnet test
 ```
 
@@ -104,7 +104,6 @@ More information
 
  * [HtmlRuleSanitizer NuGet package](https://www.nuget.org/packages/Vereyon.Web.HtmlSanitizer/)
  * [CodeProject article on HtmlRuleSanitizer](http://www.codeproject.com/Articles/879381/Rule-based-HTML-sanitizer)
- * [Used in AlertA Contract Management](http://www.alert.eu)
 
 License
 -------

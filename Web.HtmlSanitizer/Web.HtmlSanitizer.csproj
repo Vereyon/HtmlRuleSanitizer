@@ -1,19 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net40;net45;netstandard1.3 ;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net40;net45;netstandard1.3;netstandard2.0</TargetFrameworks>
     <AssemblyName>Vereyon.Web.HtmlSanitizer</AssemblyName>
     <RootNamespace>Vereyon.Web</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <PackageId>Vereyon.Web.HtmlSanitizer</PackageId>
-    <Version>1.3.1</Version>
+    <Version>1.5.0</Version>
     <Title>HtmlRuleSanitizer</Title>
     <Authors>Vereyon</Authors>
     <Company>Vereyon</Company>
     <Description>Rule based HTML sanitizer using a white list. Documentation at: https://github.com/Vereyon/HtmlRuleSanitizer</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Copyright>Copyright © 2018</Copyright>
+    <Copyright>Copyright © 2019</Copyright>
     <PackageLicenseUrl>https://github.com/Vereyon/HtmlRuleSanitizer/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Vereyon/HtmlRuleSanitizer</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Vereyon/HtmlRuleSanitizer</RepositoryUrl>
@@ -22,6 +22,7 @@
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
     <LangVersion>latest</LangVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DocumentationFile>bin\Release\$(TargetFramework)\Vereyon.Web.HtmlSanitizer.xml</DocumentationFile>
@@ -34,6 +35,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.5.0" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.6.0" />
   </ItemGroup>
 </Project>
