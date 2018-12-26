@@ -1,14 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8FE9055F-68BC-4427-A536-64CE4E324989}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.HtmlSanitizer", "Web.HtmlSanitizer\Web.HtmlSanitizer.csproj", "{347A800B-BC19-4C3D-81B9-8E0D3FA839DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.HtmlSanitizer", "Web.HtmlSanitizer\Web.HtmlSanitizer.csproj", "{347A800B-BC19-4C3D-81B9-8E0D3FA839DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.HtmlSanitizer.Tests", "Web.HtmlSanitizer.Tests\Web.HtmlSanitizer.Tests.csproj", "{B94BB0A9-399E-4CB4-8564-CC69D6CB584D}"
 EndProject
@@ -29,5 +29,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {37488DB7-0190-49AC-B123-F29135122BAB}
 	EndGlobalSection
 EndGlobal

@@ -10,3 +10,4 @@
 /Nuget/lib/*.dll
 /.vs
 /packages
+/Nuget/lib
