@@ -79,13 +79,25 @@ sanitizer.Tag("a").SetAttribute("target", "_blank")
 string cleanHtml = sanitizer.Sanitize(dirtyHtml);
 ```
 
+Contributing
+------------
 
+### Setup
 
-Tests
------
+Using .Net Core
+```
+dotnet restore
+```
+
+### Tests
 
 Got tests? Yes, see the tests project. It uses xUnit.
 
+Using .Net Core
+```
+cd Web.HtmlSanitizer.NETStandard.Tests/
+dotnet test
+```
 
 More information
 -----
