@@ -157,7 +157,34 @@ namespace Vereyon.Web
             // The extra greater than characters are going to get lost because the tags are malformed.
             // I would say this is sort of to be expected.
             string input = @"<<p>"">&lt;test<</p>"" test";
-            string expected = @"<p>&quot;&gt;&lt;test</p>&quot; test";
+            string expected = @"&lt;<p>&quot;&gt;&lt;test&lt;</p>&quot; test";
+
+            var output = sanitizer.Sanitize(input);
+            Assert.Equal(expected, output);
+        }
+
+        [Fact]
+        public void WhitelistFalse() 
+        {
+            string input = @"<html>
+<body>
+    <h1>Heading</h1>
+    <p>Some comments<span></span></p>
+    <script type=""text/javascript"">I'm illegal for sure</script>
+    <p><a href=""http://www.vereyon.com/"">Nofollow legal link</a> and here's another one: <a href=""javascript:alert('test')"">Obviously I'm illegal</a></p>
+</body>
+</html>";
+            string expected = @"<html>
+<body>
+    <h1>Heading</h1>
+    <p>Some comments</p>
+    <script type=""text/javascript"">I&#39;m illegal for sure</script>
+    <p><a href=""http://www.vereyon.com/"" target=""_blank"" rel=""nofollow"">Nofollow legal link</a> and here&#39;s another one: Obviously I&#39;m illegal</p>
+</body>
+</html>";
+
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+            sanitizer.WhiteListMode = false;
 
             var output = sanitizer.Sanitize(input);
             Assert.Equal(expected, output);

@@ -342,43 +342,45 @@ namespace Vereyon.Web
             HtmlSanitizerCheckType checkType;
             SanitizerOperation operation;
 
-            // Apply attribute checks. If the check fails, remove the attribute completely and return.
-            if (rule.CheckAttributes.TryGetValue(attribute.Name, out checkType))
-            {
-                operation = AttributeCheckRegistry[checkType](attribute);
-                switch (operation)
+            if (rule != null) {
+                // Apply attribute checks. If the check fails, remove the attribute completely and return.
+                if (rule.CheckAttributes.TryGetValue(attribute.Name, out checkType))
                 {
-                    case SanitizerOperation.FlattenTag:
-                    case SanitizerOperation.RemoveTag:
+                    operation = AttributeCheckRegistry[checkType](attribute);
+                    switch (operation)
+                    {
+                        case SanitizerOperation.FlattenTag:
+                        case SanitizerOperation.RemoveTag:
 
-                        // Can't handle these at this level. Return now as all attributes will be discared.
-                        return operation;
-                    case SanitizerOperation.RemoveAttribute:
-                        attribute.Remove();
-                        return SanitizerOperation.DoNothing;
-                    case SanitizerOperation.DoNothing:
-                        break;
-                    default:
-                        throw new InvalidOperationException("Unspported sanitation operation.");
+                            // Can't handle these at this level. Return now as all attributes will be discared.
+                            return operation;
+                        case SanitizerOperation.RemoveAttribute:
+                            attribute.Remove();
+                            return SanitizerOperation.DoNothing;
+                        case SanitizerOperation.DoNothing:
+                            break;
+                        default:
+                            throw new InvalidOperationException("Unspported sanitation operation.");
+                    }
+                }
+                
+                string valueOverride;
+
+                // Apply value override if it is specified by the rule.
+                if(rule.SetAttributes.TryGetValue(attribute.Name, out valueOverride))
+                    attribute.Value = valueOverride;
+
+                // If we are in white listing mode and no check or override is specified, simply remove the attribute.
+                // TODO: Wouldn't it be nicer is we generalized attribute rules for both checks and overrides? Would untangle code.
+                if (WhiteListMode &&
+                    !rule.SetAttributes.ContainsKey(attribute.Name) &&
+                    !rule.CheckAttributes.ContainsKey(attribute.Name) && attribute.Name != "class")
+                {
+                    attribute.Remove();
+                    return SanitizerOperation.DoNothing;
                 }
             }
             
-            string valueOverride;
-
-            // Apply value override if it is specified by the rule.
-            if(rule.SetAttributes.TryGetValue(attribute.Name, out valueOverride))
-                attribute.Value = valueOverride;
-
-            // If we are in white listing mode and no check or override is specified, simply remove the attribute.
-            // TODO: Wouldn't it be nicer is we generalized attribute rules for both checks and overrides? Would untangle code.
-            if (WhiteListMode &&
-                !rule.SetAttributes.ContainsKey(attribute.Name) &&
-                !rule.CheckAttributes.ContainsKey(attribute.Name) && attribute.Name != "class")
-            {
-                attribute.Remove();
-                return SanitizerOperation.DoNothing;
-            }
-
             // Do nothing else.
             return SanitizerOperation.DoNothing;
         }
