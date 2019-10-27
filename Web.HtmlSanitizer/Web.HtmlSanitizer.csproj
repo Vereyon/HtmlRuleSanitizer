@@ -7,7 +7,7 @@
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <PackageId>Vereyon.Web.HtmlSanitizer</PackageId>
-    <Version>1.5.0</Version>
+    <Version>1.5.1</Version>
     <Title>HtmlRuleSanitizer</Title>
     <Authors>Vereyon</Authors>
     <Company>Vereyon</Company>
@@ -23,7 +23,7 @@
     <IncludeSource>true</IncludeSource>
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>Fixed issue where disabling the white list does not work as intended.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added tel as an allowed URI scheme for link</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DocumentationFile>bin\Release\$(TargetFramework)\Vereyon.Web.HtmlSanitizer.xml</DocumentationFile>
