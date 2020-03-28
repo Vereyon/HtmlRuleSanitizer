@@ -10,6 +10,24 @@ namespace Vereyon.Web
     {
 
         /// <summary>
+        /// Tests if basic attribute white listing is working.
+        /// </summary>
+        [Fact]
+        public void AttributeWhiteListing()
+        {
+
+            string result;
+
+            var sanitizer = new HtmlSanitizer();
+            sanitizer.Tag("input").AllowAttributes("whitelisted");
+
+            var input = @"<input nonwhitelisted="""" whitelisted="""">";
+            var expected = @"<input whitelisted="""">";
+            result = sanitizer.Sanitize(input);
+            Assert.Equal(expected, result);
+        }
+
+        /// <summary>
         /// Tests if obviously illegal URL's are caught while obviously legal ones are left alone.
         /// </summary>
         [Fact]
@@ -93,7 +111,7 @@ namespace Vereyon.Web
         }
 
         /// <summary>
-        /// Tests if empty attributes are left alone.
+        /// Tests if empty attributes are left untouched.
         /// </summary>
         [Fact]
         public void EmptyAttributeTest()

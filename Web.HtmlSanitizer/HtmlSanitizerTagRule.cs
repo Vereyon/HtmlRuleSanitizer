@@ -52,7 +52,13 @@ namespace Vereyon.Web
         /// <summary>
         /// Sets which checks to perform on which attributes. Attribute name as key, check type as value.
         /// </summary>
+        [Obsolete]
         public IDictionary<string, HtmlSanitizerCheckType> CheckAttributes { get; protected set; }
+
+        /// <summary>
+        /// Sets which sanitizers to perform on which attributes. Attribute name as key, sanitizer instance as value.
+        /// </summary>
+        public IDictionary<string, IHtmlAttributeSanitizer> AttributeChecks { get; protected set; }
 
         /// <summary>
         /// Gets / sets if empty instances of this tag should be removed.
@@ -67,6 +73,7 @@ namespace Vereyon.Web
             Operation = SanitizerOperation.DoNothing;
             SetAttributes = new Dictionary<string, string>();
             CheckAttributes = new Dictionary<string, HtmlSanitizerCheckType>();
+            AttributeChecks = new Dictionary<string, IHtmlAttributeSanitizer>();
             NoAttributesOperation = SanitizerOperation.DoNothing;
         }
     }

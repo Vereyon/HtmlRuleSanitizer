@@ -139,9 +139,15 @@ namespace Vereyon.Web
         /// <param name="attribute"></param>
         /// <param name="check"></param>
         /// <returns></returns>
+        [Obsolete]
         public static HtmlSanitizerTagRule CheckAttribute(this HtmlSanitizerTagRule rule, string attribute, HtmlSanitizerCheckType check)
         {
-            rule.CheckAttributes[attribute] = check;
+            switch(check)
+            {
+                case HtmlSanitizerCheckType.Url:
+                    rule.CheckAttributeUrl(attribute);
+                    break;
+            }
             return rule;
         }
 
@@ -159,7 +165,7 @@ namespace Vereyon.Web
                 if (string.IsNullOrEmpty(trimmed))
                     continue;
 
-                rule.CheckAttributes[trimmed] = HtmlSanitizerCheckType.AllowAttribute;
+                rule.AttributeChecks[trimmed] = WhiteListingAttributeSanitizer.Default;
             }
 
             return rule;

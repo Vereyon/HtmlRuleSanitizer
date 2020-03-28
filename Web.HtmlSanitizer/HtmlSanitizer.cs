@@ -33,6 +33,7 @@ namespace Vereyon.Web
         /// <summary>
         /// Contains sanitation checks supported HtmlSanitizer class instance.
         /// </summary>
+        [Obsolete]
         public IDictionary<HtmlSanitizerCheckType, HtmlSanitizerAttributeCheckHandler> AttributeCheckRegistry { get; protected set; }
 
         /// <summary>
@@ -102,27 +103,10 @@ namespace Vereyon.Web
         /// Checks if the passed HTML attribute contains a valid URL.
         /// </summary>
         /// <param name="attribute"></param>
+        [Obsolete("This method has been deprecated in favor of the UrlCheckerAttributeSanitizer.")]
         public static bool AttributeUrlCheck(HtmlAttribute attribute)
         {
-
-            string url = attribute.Value;
-
-            Uri uri;
-            if (!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out uri))
-                return false;
-
-            // Reject the url if it is not well formed.
-            if (!uri.IsWellFormedOriginalString())
-                return false;
-
-            // Reject the url if it has invalid scheme. Only do this check if we are dealing with an absolute url.
-            if (uri.IsAbsoluteUri && !AllowedUriSchemes.Contains(uri.Scheme, StringComparer.OrdinalIgnoreCase))
-                return false;
-
-            // Make sure to the url is well formed.
-            attribute.Value = uri.ToString();
-
-            return true;
+            return new UrlCheckerAttributeSanitizer().AttributeUrlCheck(attribute);
         }
 
         /// <summary>
@@ -130,6 +114,7 @@ namespace Vereyon.Web
         /// </summary>
         /// <param name="attribute"></param>
         /// <returns></returns>
+        [Obsolete("This method has been deprecated in favor of the UrlCheckerAttributeSanitizer.")]
         public static SanitizerOperation UrlCheckHandler(HtmlAttribute attribute)
         {
 
@@ -339,14 +324,15 @@ namespace Vereyon.Web
                     return SanitizerOperation.DoNothing;
             }
 
-            HtmlSanitizerCheckType checkType;
+            IHtmlAttributeSanitizer attributeCheck;
             SanitizerOperation operation;
 
-            if (rule != null) {
+            if (rule != null)
+            {
                 // Apply attribute checks. If the check fails, remove the attribute completely and return.
-                if (rule.CheckAttributes.TryGetValue(attribute.Name, out checkType))
+                if (rule.AttributeChecks.TryGetValue(attribute.Name, out attributeCheck))
                 {
-                    operation = AttributeCheckRegistry[checkType](attribute);
+                    operation = attributeCheck.SanitizeAttribute(attribute, rule);
                     switch (operation)
                     {
                         case SanitizerOperation.FlattenTag:
@@ -363,18 +349,18 @@ namespace Vereyon.Web
                             throw new InvalidOperationException("Unspported sanitation operation.");
                     }
                 }
-                
+
                 string valueOverride;
 
                 // Apply value override if it is specified by the rule.
-                if(rule.SetAttributes.TryGetValue(attribute.Name, out valueOverride))
+                if (rule.SetAttributes.TryGetValue(attribute.Name, out valueOverride))
                     attribute.Value = valueOverride;
 
                 // If we are in white listing mode and no check or override is specified, simply remove the attribute.
                 // TODO: Wouldn't it be nicer is we generalized attribute rules for both checks and overrides? Would untangle code.
                 if (WhiteListMode &&
                     !rule.SetAttributes.ContainsKey(attribute.Name) &&
-                    !rule.CheckAttributes.ContainsKey(attribute.Name) && attribute.Name != "class")
+                    !rule.AttributeChecks.ContainsKey(attribute.Name) && attribute.Name != "class")
                 {
                     attribute.Remove();
                     return SanitizerOperation.DoNothing;
@@ -482,8 +468,9 @@ namespace Vereyon.Web
     }
 
 	/// <summary>
-	/// Types of sanitizations.
+	/// Types of attribute sanitizations.
 	/// </summary>
+    [Obsolete]
 	public enum HtmlSanitizerCheckType
     {
 
