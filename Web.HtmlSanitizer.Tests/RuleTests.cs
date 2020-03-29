@@ -50,7 +50,7 @@ namespace Vereyon.Web
             sanitizer.Tag("i").RemoveEmpty();
             sanitizer.Tag("a").SetAttribute("target", "_blank")
                 .SetAttribute("rel", "nofollow")
-                .CheckAttribute("href", HtmlSanitizerCheckType.Url)
+                .CheckAttributeUrl("href")
                 .RemoveEmpty();
 
             result = sanitizer.Sanitize(input);

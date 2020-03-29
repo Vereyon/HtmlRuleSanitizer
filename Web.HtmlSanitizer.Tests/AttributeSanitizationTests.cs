@@ -83,7 +83,7 @@ namespace Vereyon.Web
 
             string result;
             var sanitizer = new HtmlSanitizer();
-            sanitizer.Tag("a").CheckAttribute("href", HtmlSanitizerCheckType.Url);
+            sanitizer.Tag("a").CheckAttributeUrl("href");
 
             // Test a relative url, which should pass.
             var input = @"<a href=""../relative.htm"">Relative link</a>";

@@ -36,7 +36,7 @@ namespace Vereyon.Web
             string input, result, expected;
 
             var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
-            sanitizer.Tag("img").CheckAttribute("src", HtmlSanitizerCheckType.Url);
+            sanitizer.Tag("img").CheckAttributeUrl("src");
 
             input = @"<IMG SRC =# onmouseover=""alert('xxs')"">";
             expected = @"";

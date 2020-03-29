@@ -205,7 +205,7 @@ namespace Vereyon.Web
 
             string result;
             var sanitizer = new HtmlSanitizer();
-            sanitizer.Tag("a").CheckAttribute("href", HtmlSanitizerCheckType.Url);
+            sanitizer.Tag("a").CheckAttributeUrl("href");
 
             // Test a relative url, which should pass.
             var input = @"<a href=""mailto:test@example.com?subject=test this"">MailTo</a>";

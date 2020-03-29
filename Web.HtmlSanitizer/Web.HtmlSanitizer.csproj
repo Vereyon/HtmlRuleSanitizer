@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net40;netstandard1.3;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net40;net45;netstandard1.3;netstandard2.0</TargetFrameworks>
     <AssemblyName>Vereyon.Web.HtmlSanitizer</AssemblyName>
     <RootNamespace>Vereyon.Web</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <PackageId>Vereyon.Web.HtmlSanitizer</PackageId>
-    <Version>1.5.1</Version>
+    <Version>1.6.0-beta1</Version>
     <Title>HtmlRuleSanitizer</Title>
-    <Authors>Vereyon</Authors>
+    <Authors>Christ Akkermans</Authors>
     <Company>Vereyon</Company>
     <Description>Rule based HTML sanitizer using a white list. Documentation at: https://github.com/Vereyon/HtmlRuleSanitizer</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Copyright>Copyright © 2019</Copyright>
+    <Copyright>Copyright © 2020</Copyright>
     <PackageLicenseUrl>https://github.com/Vereyon/HtmlRuleSanitizer/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Vereyon/HtmlRuleSanitizer</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Vereyon/HtmlRuleSanitizer</RepositoryUrl>
@@ -23,7 +23,7 @@
     <IncludeSource>true</IncludeSource>
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>Added tel as an allowed URI scheme for link</PackageReleaseNotes>
+    <PackageReleaseNotes>Implemented customizable attribute sanitization.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DocumentationFile>bin\Release\$(TargetFramework)\Vereyon.Web.HtmlSanitizer.xml</DocumentationFile>
