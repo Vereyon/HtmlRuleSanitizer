@@ -159,13 +159,26 @@ namespace Vereyon.Web
         /// <returns></returns>
         public static HtmlSanitizerTagRule AllowAttributes(this HtmlSanitizerTagRule rule, string attributes)
         {
+            rule.SanitizeAttributes(attributes, WhiteListingAttributeSanitizer.Default);
+            return rule;
+        }
+
+        /// <summary>
+        /// Specifies the passed attribute sanitizer is to be applied to the space seperated list of attributes on this tag.
+        /// </summary>
+        /// <param name="rule"></param>
+        /// <param name="attributes"></param>
+        /// <param name="attributeSanitizer"></param>
+        /// <returns></returns>
+        public static HtmlSanitizerTagRule SanitizeAttributes(this HtmlSanitizerTagRule rule, string attributes, IHtmlAttributeSanitizer attributeSanitizer)
+        {
             foreach (var attribute in attributes.Split(' '))
             {
                 var trimmed = attribute.Trim();
                 if (string.IsNullOrEmpty(trimmed))
                     continue;
 
-                rule.AttributeChecks[trimmed] = WhiteListingAttributeSanitizer.Default;
+                rule.AttributeChecks[trimmed] = attributeSanitizer;
             }
 
             return rule;

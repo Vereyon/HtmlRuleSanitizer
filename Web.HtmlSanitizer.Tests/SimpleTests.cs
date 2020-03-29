@@ -196,8 +196,11 @@ namespace Vereyon.Web
             Assert.Equal(expected, output);
         }
 
+        /// <summary>
+        /// Verifies invalid URL encoding fails.
+        /// </summary>
         [Fact]
-        public void AHrefUrlCheckMailToTest()
+        public void InvalidUrlEncodingTest()
         {
 
             string result;

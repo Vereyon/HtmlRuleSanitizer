@@ -73,10 +73,34 @@ sanitizer.Tag("b").Rename("strong").RemoveEmpty();
 sanitizer.Tag("i").RemoveEmpty();
 sanitizer.Tag("a").SetAttribute("target", "_blank")
 	.SetAttribute("rel", "nofollow")
-	.CheckAttribute("href", HtmlSanitizerCheckType.Url)
+	.CheckAttributeUrl("href")
 	.RemoveEmpty();
 
 string cleanHtml = sanitizer.Sanitize(dirtyHtml);
+```
+
+### Custom attribute sanitization
+
+Attribute sanitization can be peformed by implementing a custom `IHtmlAttributeSanitizer`. The code below illustrates a simple custom sanitizer which overrides the attribute value:
+
+```C#
+class CustomSanitizer : IHtmlAttributeSanitizer
+{
+    public SanitizerOperation SanitizeAttribute(HtmlAttribute attribute, HtmlSanitizerTagRule tagRule)
+    {
+		// Override the attribute value and leave the attribute as be.
+        attribute.Value = "123";
+        return SanitizerOperation.DoNothing;
+    }
+}
+```
+
+The custom sanitizer can then be assigned to the desired attributes as follows:
+
+```C#
+var sanitizer = new HtmlSanitizer();
+var attributeSanitizer = new CustomSanitizer();
+sanitizer.Tag("span").SanitizeAttributes("style", attributeSanitizer);
 ```
 
 Contributing
