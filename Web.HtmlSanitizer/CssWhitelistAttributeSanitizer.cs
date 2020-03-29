@@ -6,6 +6,9 @@ using HtmlAgilityPack;
 
 namespace Vereyon.Web
 {
+    /// <summary>
+    /// Attribute sanitizer which only allows whitelisted CSS classes, and removes the class attribute alltogether if no CSS declarations remain.
+    /// </summary>
     public class CssWhitelistAttributeSanitizer : IHtmlAttributeSanitizer
     {
         public SanitizerOperation SanitizeAttribute(HtmlAttribute attribute, HtmlSanitizerTagRule tagRule)
@@ -17,6 +20,9 @@ namespace Vereyon.Web
             return SanitizerOperation.DoNothing;
         }
 
+        /// <summary>
+        /// Gets / sets the list of allowed CSS classes
+        /// </summary>
         public IList<string> AllowedCssClasses { get; set; } = new List<string>();
 
         /// <summary>

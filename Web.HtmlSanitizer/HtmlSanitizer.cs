@@ -417,7 +417,7 @@ namespace Vereyon.Web
                 .AllowAttributes("value");
             sanitizer.Tag("a").SetAttribute("target", "_blank")
                 .SetAttribute("rel", "nofollow")
-                .CheckAttribute("href", HtmlSanitizerCheckType.Url)
+                .CheckAttributeUrl("href")
                 .RemoveEmpty()
                 .NoAttributes(SanitizerOperation.FlattenTag);
 

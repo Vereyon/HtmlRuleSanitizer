@@ -36,6 +36,29 @@ namespace Vereyon.Web
 
             string result;
             var sanitizer = new HtmlSanitizer();
+            sanitizer.Tag("a").CheckAttributeUrl("href");
+
+            // Test some illegal href
+            var inputIllegal = @"<a href=""javascript:alert('test')"">That XSS trick</a>";
+            var expectedIllegal = @"That XSS trick";
+            result = sanitizer.Sanitize(inputIllegal);
+            Assert.Equal(expectedIllegal, result);
+
+            // Test a legal well formed url
+            var inputLegal = @"<a href=""http://www.google.com/"">Legal link</a>";
+            result = sanitizer.Sanitize(inputLegal);
+            Assert.Equal(inputLegal, result);
+        }
+
+        /// <summary>
+        /// Tests if obviously illegal URL's are caught while obviously legal ones are left alone.
+        /// </summary>
+        [Fact]
+        public void AHrefUrlCheckTestLegacy()
+        {
+
+            string result;
+            var sanitizer = new HtmlSanitizer();
             sanitizer.Tag("a").CheckAttribute("href", HtmlSanitizerCheckType.Url);
 
             // Test some illegal href

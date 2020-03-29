@@ -195,5 +195,20 @@ namespace Vereyon.Web
             var output = sanitizer.Sanitize(input);
             Assert.Equal(expected, output);
         }
+
+        [Fact]
+        public void AHrefUrlCheckMailToTest()
+        {
+
+            string result;
+            var sanitizer = new HtmlSanitizer();
+            sanitizer.Tag("a").CheckAttribute("href", HtmlSanitizerCheckType.Url);
+
+            // Test a relative url, which should pass.
+            var input = @"<a href=""mailto:test@example.com?subject=test this"">MailTo</a>";
+            var expected = @"<a href=""mailto:test@example.com?subject=test this"">MailTo</a>";
+            result = sanitizer.Sanitize(input);
+            Assert.NotEqual(expected, result);
+        }
     }
 }
