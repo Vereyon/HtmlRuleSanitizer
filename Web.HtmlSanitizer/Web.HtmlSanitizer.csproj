@@ -7,7 +7,7 @@
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <PackageId>Vereyon.Web.HtmlSanitizer</PackageId>
-    <Version>1.6.0-beta1</Version>
+    <Version>1.6.0</Version>
     <Title>HtmlRuleSanitizer</Title>
     <Authors>Christ Akkermans</Authors>
     <Company>Vereyon</Company>
@@ -18,7 +18,7 @@
     <PackageProjectUrl>https://github.com/Vereyon/HtmlRuleSanitizer</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Vereyon/HtmlRuleSanitizer</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <PackageTags>ASP.NET;MVC;HTML;sanitizer;XSS;antixss;anti;security</PackageTags>
+    <PackageTags>ASP.NET;MVC;HTML;sanitizer;XSS;antixss;anti;security;Core;Standard</PackageTags>
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
     <LangVersion>latest</LangVersion>
