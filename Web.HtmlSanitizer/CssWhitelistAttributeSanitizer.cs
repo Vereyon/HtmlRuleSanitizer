@@ -23,14 +23,14 @@ namespace Vereyon.Web
         /// <summary>
         /// Gets / sets the list of allowed CSS classes
         /// </summary>
-        public IList<string> AllowedCssClasses { get; set; } = new List<string>();
+        public virtual IList<string> AllowedCssClasses { get; set; } = new List<string>();
 
         /// <summary>
         /// Applies the CSS class white list to the passed attribute. Returns false if the complete attribute is removed.
         /// </summary>
         /// <param name="attribute"></param>
         /// <returns></returns>
-        protected bool ApplyCssWhitelist(HtmlAttribute attribute)
+        protected virtual bool ApplyCssWhitelist(HtmlAttribute attribute)
         {
 
             // Break the attribute contents on white spaces after trimming off any white spaces.

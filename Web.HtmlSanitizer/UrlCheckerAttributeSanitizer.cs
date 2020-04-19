@@ -22,7 +22,7 @@ namespace Vereyon.Web
         /// </summary>
         /// <param name="attribute"></param>
         /// <returns></returns>
-        public SanitizerOperation SanitizeAttribute(HtmlAttribute attribute, HtmlSanitizerTagRule tagRule)
+        public virtual SanitizerOperation SanitizeAttribute(HtmlAttribute attribute, HtmlSanitizerTagRule tagRule)
         {
             // Check the url. We assume that there's no use in keeping for example a link tag without a href, so flatten the tag on failure.
             if (!AttributeUrlCheck(attribute))
@@ -35,7 +35,7 @@ namespace Vereyon.Web
         /// Checks if the passed HTML attribute contains a valid URL.
         /// </summary>
         /// <param name="attribute"></param>
-        protected internal bool AttributeUrlCheck(HtmlAttribute attribute)
+        protected internal virtual bool AttributeUrlCheck(HtmlAttribute attribute)
         {
 
             string url = attribute.Value;
