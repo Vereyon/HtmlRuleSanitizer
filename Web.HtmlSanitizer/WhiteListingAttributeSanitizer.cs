@@ -11,6 +11,10 @@ namespace Vereyon.Web
     /// </summary>
     public class WhiteListingAttributeSanitizer : IHtmlAttributeSanitizer
     {
+
+        /// <summary>
+        /// Returns SanitizerOperation.DoNothing for the specified attribute.
+        /// </summary>
         public SanitizerOperation SanitizeAttribute(HtmlAttribute attribute, HtmlSanitizerTagRule tagRule)
         {
             return SanitizerOperation.DoNothing;

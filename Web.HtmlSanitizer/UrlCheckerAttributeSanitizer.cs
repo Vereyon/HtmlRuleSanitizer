@@ -18,9 +18,10 @@ namespace Vereyon.Web
         public static UrlCheckerAttributeSanitizer Default { get; private set; } = new UrlCheckerAttributeSanitizer();
 
         /// <summary>
-        /// Checks if the attribute contains a valid link.
+        /// Checks if the attribute contains a valid URL.
         /// </summary>
         /// <param name="attribute"></param>
+        /// <param name="tagRule"></param>
         /// <returns></returns>
         public virtual SanitizerOperation SanitizeAttribute(HtmlAttribute attribute, HtmlSanitizerTagRule tagRule)
         {
@@ -59,9 +60,15 @@ namespace Vereyon.Web
         }
     }
 
+    /// <summary>
+    /// Fluent extension methods for URL checking.
+    /// </summary>
     public static class UrlCheckerAttributeSanitizerFluentHelper
     {
 
+        /// <summary>
+        /// Applies the default URL check to the specified attribute.
+        /// </summary>
         public static HtmlSanitizerTagRule CheckAttributeUrl(this HtmlSanitizerTagRule rule, string attribute)
         {
             rule.AttributeChecks.Add(attribute, UrlCheckerAttributeSanitizer.Default);

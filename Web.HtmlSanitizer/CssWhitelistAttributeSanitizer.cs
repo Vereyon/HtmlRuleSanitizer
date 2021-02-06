@@ -11,6 +11,10 @@ namespace Vereyon.Web
     /// </summary>
     public class CssWhitelistAttributeSanitizer : IHtmlAttributeSanitizer
     {
+
+        /// <summary>
+        /// Checks the passed attribute content agains the configured list of css classes.
+        /// </summary>
         public SanitizerOperation SanitizeAttribute(HtmlAttribute attribute, HtmlSanitizerTagRule tagRule)
         {
 
