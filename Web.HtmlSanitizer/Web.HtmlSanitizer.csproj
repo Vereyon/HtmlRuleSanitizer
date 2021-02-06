@@ -7,7 +7,7 @@
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <PackageId>Vereyon.Web.HtmlSanitizer</PackageId>
-    <Version>1.6.0</Version>
+    <Version>1.6.0.1</Version>
     <Title>HtmlRuleSanitizer</Title>
     <Authors>Christ Akkermans</Authors>
     <Company>Vereyon</Company>
@@ -37,5 +37,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.6.0" />
+
+    <!-- Reference the .NET Reference assemblies for easy building without the old .NET Framework SDKs installed -->
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="All" Version="1.0.0" />
   </ItemGroup>
 </Project>
