@@ -1,7 +1,7 @@
 HtmlRuleSanitizer
 =================
 
-[![NuGet version](https://badge.fury.io/nu/Vereyon.Web.HtmlSanitizer.svg)](http://badge.fury.io/nu/Vereyon.Web.HtmlSanitizer)
+[![Nuget version](https://img.shields.io/nuget/v/Vereyon.Web.HtmlSanitizer)](https://www.nuget.org/packages/Vereyon.Web.HtmlSanitizer/)
 
 HtmlRuleSanitizer is a white list rule based HTML sanitizer built on top of the HTML Agility Pack.
 
