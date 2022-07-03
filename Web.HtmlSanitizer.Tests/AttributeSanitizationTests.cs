@@ -196,5 +196,23 @@ namespace Vereyon.Web
                 return SanitizerOperation.DoNothing;
             }
         }
+
+
+        /// <summary>
+        /// Tests if legal URL with percents keep intact
+        /// </summary>
+        [Fact]
+        public void HrefWithPercents()
+        {
+
+            string result;
+            var sanitizer = new HtmlSanitizer();
+            sanitizer.Tag("a").CheckAttributeUrl("href");
+
+            // Test a legal well formed url
+            var inputLegal = @"<a href=""https://vk.com/?q=%23%D1%83"">post</a>";
+            result = sanitizer.Sanitize(inputLegal);
+            Assert.Equal(inputLegal, result);
+        }
     }
 }
