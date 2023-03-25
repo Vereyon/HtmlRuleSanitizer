@@ -47,6 +47,9 @@ public class HtmlSanitizer : IHtmlSanitizer
 	/// <returns></returns>
 	public delegate SanitizerOperation HtmlSanitizerAttributeCheckHandler(HtmlAttribute attribute);
 
+	/// <summary>Occurs after a node is processed.</summary>
+	public event Action<HtmlNode> PostprocessNode;
+
 	/// <summary>Occurs before a node is processed and will cancel further processing if return value is <see langword="false"/>.</summary>
 	public event Func<HtmlNode, bool> PreprocessNode;
 
@@ -235,8 +238,7 @@ public class HtmlSanitizer : IHtmlSanitizer
 			}
 
 			// Only further process element nodes (includes the root document).
-			if (node.NodeType is not HtmlNodeType.Element
-			and not HtmlNodeType.Document)
+			if (node.NodeType is not HtmlNodeType.Element and not HtmlNodeType.Document)
 			{
 				return;
 			}
@@ -251,7 +253,6 @@ public class HtmlSanitizer : IHtmlSanitizer
 				&& WhiteListMode && node.NodeType != HtmlNodeType.Document)
 			{
 				node.Remove();
-				return;
 			}
 
 			if (rule != null)
@@ -299,11 +300,9 @@ public class HtmlSanitizer : IHtmlSanitizer
 				}
 
 				// If the node does not have any attributes, see if we need to do anything with it.
-				if (node.Attributes.Count == 0)
-				{
-					if (!ApplyNodeOperation(node, rule.NoAttributesOperation))
-						return;
-				}
+				if (node.Attributes.Count == 0
+					&& !ApplyNodeOperation(node, rule.NoAttributesOperation))
+					return;
 
 				// Ensure that all attributes are set according to the rule.
 				foreach (KeyValuePair<string, string> setAttribute in rule.SetAttributes.Where(r => !node.Attributes.Contains(r.Key)))
@@ -317,16 +316,16 @@ public class HtmlSanitizer : IHtmlSanitizer
 
 			// If the tag is empty and the rule instructs the removal of empty tag, remove the node. We are doing
 			// this again because at this point the node may have become empty.
-			if (rule != null)
+			if (rule != null
+				&& rule.RemoveEmpty
+				&& !node.HasAttributes
+				&& !node.HasChildNodes)
 			{
-				if (rule.RemoveEmpty
-					&& !node.HasAttributes
-					&& !node.HasChildNodes)
-				{
-					node.Remove();
-					return;
-				}
+				node.Remove();
+				return;
 			}
+
+			PostprocessNode?.Invoke(node);
 		}
 	}
 
