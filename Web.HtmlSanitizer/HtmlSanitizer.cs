@@ -15,10 +15,12 @@ namespace Vereyon.Web
     /// </remarks>
     public class HtmlSanitizer : IHtmlSanitizer
     {
-        /// <summary>
-        /// Determines if CSS classes are sanitized.
-        /// </summary>
-        public bool SanitizeCssClasses { get; set; }
+		internal static readonly string[] defaultAllowedUriSchemes = new[] { "http", "https", "mailto", "tel" };
+
+		/// <summary>
+		/// Determines if CSS classes are sanitized.
+		/// </summary>
+		public bool SanitizeCssClasses { get; set; }
         
         /// <summary>
         /// Sets which CSS classes are allowed on any HTML tag.
@@ -105,16 +107,16 @@ namespace Vereyon.Web
         /// <summary>
         /// Collection of the allowed URI schemes.
         /// </summary>
-        public static IEnumerable<string> AllowedUriSchemes = new string[] { "http", "https", "mailto", "tel" };
+        public IList<string> AllowedUriSchemes { get; set; } = new List<string>(defaultAllowedUriSchemes);
 
-        /// <summary>
-        /// Checks if the passed HTML attribute contains a valid URL.
-        /// </summary>
-        /// <param name="attribute"></param>
-        [Obsolete("This method has been deprecated in favor of the UrlCheckerAttributeSanitizer.")]
+		/// <summary>
+		/// Checks if the passed HTML attribute contains a valid URL.
+		/// </summary>
+		/// <param name="attribute"></param>
+		[Obsolete("This method has been deprecated in favor of the UrlCheckerAttributeSanitizer.")]
         public static bool AttributeUrlCheck(HtmlAttribute attribute)
         {
-            return new UrlCheckerAttributeSanitizer().AttributeUrlCheck(attribute);
+            return new UrlCheckerAttributeSanitizer() { AllowedUriSchemes = defaultAllowedUriSchemes }.AttributeUrlCheck(attribute);
         }
 
         /// <summary>
