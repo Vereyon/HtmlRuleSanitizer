@@ -104,6 +104,9 @@ namespace Vereyon.Web
         /// <returns></returns>
         public delegate SanitizerOperation HtmlSanitizerAttributeCheckHandler(HtmlAttribute attribute);
 
+		/// <summary>Occurs before a node is processed and will cancel further processing if return value is <see langword="false"/>.</summary>
+		public event Func<HtmlNode, bool> PreprocessNode;
+
         /// <summary>
         /// Collection of the allowed URI schemes.
         /// </summary>
@@ -169,6 +172,9 @@ namespace Vereyon.Web
 
             using (new RecursionGuard(this))
             {
+
+                if (PreprocessNode?.Invoke(node) == false)
+                    return;
 
                 // Remove any comment nodes if instructed to do so.
                 if (node.NodeType == HtmlNodeType.Comment && RemoveComments)
