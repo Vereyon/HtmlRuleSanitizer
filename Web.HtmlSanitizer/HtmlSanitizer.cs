@@ -20,7 +20,6 @@ public class HtmlSanitizer : IHtmlSanitizer
 	private readonly CssWhitelistAttributeSanitizer _cssAttributeSanitizer;
 
 	/// <summary>Initializes a new instance of the <see cref="HtmlSanitizer"/> class.</summary>
-	[Obsolete]
 	public HtmlSanitizer()
 	{
 		WhiteListMode = true;
@@ -130,7 +129,6 @@ public class HtmlSanitizer : IHtmlSanitizer
 	/// </summary>
 	/// <remarks>Strips all CSS and only allows simple links. Enfores nofollow.</remarks>
 	/// <returns></returns>
-	[Obsolete]
 	public static HtmlSanitizer SimpleHtml5Sanitizer()
 	{
 
@@ -212,7 +210,7 @@ public class HtmlSanitizer : IHtmlSanitizer
 		using (new RecursionGuard(this))
 		{
 
-			if (PreprocessNode?.Invoke(node) == false)
+			if (PreprocessNode is not null && PreprocessNode.Invoke(node) == false)
 				return;
 
 			// Remove any comment nodes if instructed to do so.
