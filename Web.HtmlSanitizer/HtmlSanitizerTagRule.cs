@@ -27,11 +27,11 @@ public class HtmlSanitizerTagRule
 	/// </summary>
 	public IDictionary<string, IHtmlAttributeSanitizer> AttributeChecks { get; protected set; }
 
-	/// <summary>
-	/// Sets which checks to perform on which attributes. Attribute name as key, check type as value.
-	/// </summary>
-	[Obsolete]
-	public IDictionary<string, HtmlSanitizerCheckType> CheckAttributes { get; protected set; }
+    /// <summary>
+    /// Sets which checks to perform on which attributes. Attribute name as key, check type as value.
+    /// </summary>
+    [Obsolete("The fixed attribute check types have been deprecated with the IHtmlAttributeSanitizer interface.")]
+    public IDictionary<string, HtmlSanitizerCheckType> CheckAttributes { get; protected set; }
 
 	/// <summary>
 	/// Gets / sets if this tag should be removed while it's contents are preserved.

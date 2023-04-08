@@ -62,11 +62,11 @@ public class HtmlSanitizer : IHtmlSanitizer
 	/// </summary>
 	public IList<string> AllowedUriSchemes { get; set; } = new List<string>(defaultAllowedUriSchemes);
 
-	/// <summary>
-	/// Contains sanitation checks supported HtmlSanitizer class instance.
-	/// </summary>
-	[Obsolete]
-	public IDictionary<HtmlSanitizerCheckType, HtmlSanitizerAttributeCheckHandler> AttributeCheckRegistry { get; protected set; }
+    /// <summary>
+    /// Contains sanitation checks supported HtmlSanitizer class instance.
+    /// </summary>
+    [Obsolete("The fixed attribute check types have been deprecated with the IHtmlAttributeSanitizer interface.")]
+    public IDictionary<HtmlSanitizerCheckType, HtmlSanitizerAttributeCheckHandler> AttributeCheckRegistry { get; protected set; }
 
 	/// <summary>
 	/// Gets / sets if HTML entities in all text should be encoded.
@@ -361,11 +361,11 @@ public class HtmlSanitizer : IHtmlSanitizer
 		}
 	}
 
-	/// <summary>
-	/// Registers the out of the box supported sanitation checks.
-	/// </summary>
-	[Obsolete]
-	private void RegisterChecks()
+    /// <summary>
+    /// Registers the out of the box supported sanitation checks.
+    /// </summary>
+    [Obsolete("The fixed attribute check types have been deprecated with the IHtmlAttributeSanitizer interface.")]
+    private void RegisterChecks()
 	{
 
 		AttributeCheckRegistry.Add(HtmlSanitizerCheckType.Url, new HtmlSanitizerAttributeCheckHandler(UrlCheckHandler));
@@ -439,7 +439,7 @@ public class HtmlSanitizer : IHtmlSanitizer
 /// <summary>
 /// Types of attribute sanitizations.
 /// </summary>
-[Obsolete]
+[Obsolete("The fixed attribute check types have been deprecated with the IHtmlAttributeSanitizer interface.")]
 public enum HtmlSanitizerCheckType
 {
 
