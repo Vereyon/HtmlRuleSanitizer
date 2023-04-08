@@ -12,7 +12,6 @@ public class HtmlSanitizerTagRule
 
 	/// <summary>Initializes a new instance of the <see cref="HtmlSanitizerTagRule"/> class.</summary>
 	/// <param name="tagName">Name of the tag.</param>
-	[Obsolete]
 	public HtmlSanitizerTagRule(string tagName)
 	{
 		TagName = tagName;
