@@ -36,7 +36,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.6.0" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.7.1" />
     <!-- Reference the .NET Reference assemblies for easy building without the old .NET Framework SDKs installed -->
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="All" Version="1.0.3" />
   </ItemGroup>

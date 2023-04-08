@@ -29,6 +29,25 @@ namespace Vereyon.Web
             Assert.Throws<InvalidOperationException>(() => { result = sanitizer.Sanitize(input); });
 
         }
-        
+
+        /// <summary>
+        /// HAP version < 1.7.1 contained a bug in how comments with a non standard end tag are handled, allowing certain maliscious snippets to get through.
+        /// Credits go to David K. / @leeN
+        /// </summary>
+        [Fact]
+        public void HtmlAgilityPackBadCommentHandling()
+        {
+
+            var sanitizer = new HtmlSanitizer();
+            sanitizer.Tag("img").AllowAttributes("src");
+            sanitizer.RemoveComments = false;
+
+            // This comment tag will 'confuse' HAP versions before 1.7.1, allowing the maliscious onerror attribute contents to get through.
+            var input = @"<!-- abc --!> <img src=x onerror=alert(1)>";
+            var expected = @"<!-- abc --!><img src=""x"">";
+            var result = sanitizer.Sanitize(input);
+
+            Assert.Equal(expected, result); 
+        }
     }
 }

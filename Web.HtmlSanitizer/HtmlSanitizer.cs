@@ -30,6 +30,7 @@ public class HtmlSanitizer : IHtmlSanitizer
 		AttributeCheckRegistry = new Dictionary<HtmlSanitizerCheckType, HtmlSanitizerAttributeCheckHandler>();
 		MaxRecursionDepth = 75;
 		Depth = 0;
+		RemoveComments = true;
 
 		RegisterChecks();
 
@@ -452,4 +453,11 @@ public enum HtmlSanitizerCheckType
 	/// Specifies that this attribute is allowed and that it's value is not to be checked.
 	/// </summary>
 	AllowAttribute,
+}
+
+public enum NormalizeAttributeQuotes
+{
+	NoNormalization,
+	SingleQuotes,
+	DoubleQuotes
 }
