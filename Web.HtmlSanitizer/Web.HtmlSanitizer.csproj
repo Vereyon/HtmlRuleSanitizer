@@ -18,12 +18,19 @@
     <PackageProjectUrl>https://github.com/Vereyon/HtmlRuleSanitizer</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Vereyon/HtmlRuleSanitizer</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <PackageTags>ASP.NET;MVC;HTML;sanitizer;XSS;antixss;anti;security;Core;Standard</PackageTags>
+    <PackageTags>HTML;sanitizer;XSS;antixss;anti;security;Core;Standard;Web;ASP.NET;MVC;</PackageTags>
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>Implemented customizable attribute sanitization.</PackageReleaseNotes>
+    <PackageReleaseNotes>This release adds some features and removes support for some old and out of support target frameworks. Functional changes are limited to removing comments by default.
+
+Remove comments by default.
+Add events before nodes are processed and after nodes are processed to ease customization.
+Make allowed URI schemes more easily configurable.
+Updatge required HtmlAgilityPack to 1.7.1</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DocumentationFile>bin\Release\$(TargetFramework)\Vereyon.Web.HtmlSanitizer.xml</DocumentationFile>
@@ -34,6 +41,12 @@
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.7.1" />

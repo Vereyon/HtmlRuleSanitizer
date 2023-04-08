@@ -35,6 +35,7 @@ Features
  * Attribute checks (e.g. URL validity) and white listing
  * A fluent style configuration interface
  * HTML entity encoding
+ * Comment removal
  
 Usage
 -----
@@ -53,9 +54,11 @@ var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
 string cleanHtml = sanitizer.Sanitize(dirtyHtml);
 ```
 
-*Note: the SimpleHtml5Sanitizer returns a rule set which does not allow for a full document definition. Use SimpleHtml5DocumentSanitizer*
+*Note: the SimpleHtml5Sanitizer returns a rule set which does not allow for a full document definition. Use ```SimpleHtml5DocumentSanitizer```*
 
 ### Sanitize a document
+
+When dealing with full HTML documents including the ```html``` and ```body``` tags, use ```SimpleHtml5DocumentSanitizer```: 
 
 ```C#
 var sanitizer = HtmlSanitizer.SimpleHtml5DocumentSanitizer();
