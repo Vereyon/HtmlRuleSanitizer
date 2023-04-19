@@ -12,15 +12,20 @@ public class UrlCheckerAttributeSanitizer : IHtmlAttributeSanitizer
 	/// <summary>
 	/// Collection of the allowed URI schemes.
 	/// </summary>
-	public string[] AllowedUriSchemes { get; internal set; }
+	public string[] AllowedUriSchemes { get; }
 
-	/// <summary>
-	/// Checks if the attribute contains a valid URL.
-	/// </summary>
-	/// <param name="attribute"></param>
-	/// <param name="tagRule"></param>
-	/// <returns></returns>
-	public virtual SanitizerOperation SanitizeAttribute(HtmlAttribute attribute, HtmlSanitizerTagRule tagRule) =>
+    public UrlCheckerAttributeSanitizer(string[] allowedUriSchemes)
+    {
+		AllowedUriSchemes = allowedUriSchemes ?? HtmlSanitizer.defaultAllowedUriSchemes;
+    }
+
+    /// <summary>
+    /// Checks if the attribute contains a valid URL.
+    /// </summary>
+    /// <param name="attribute"></param>
+    /// <param name="tagRule"></param>
+    /// <returns></returns>
+    public virtual SanitizerOperation SanitizeAttribute(HtmlAttribute attribute, HtmlSanitizerTagRule tagRule) =>
 		// Check the url. We assume that there's no use in keeping for example a link tag without a href, so flatten the tag on failure.
 		!AttributeUrlCheck(attribute) ? SanitizerOperation.FlattenTag : SanitizerOperation.DoNothing;
 
@@ -62,7 +67,7 @@ public static class UrlCheckerAttributeSanitizerFluentHelper
 	/// </summary>
 	public static HtmlSanitizerTagRule CheckAttributeUrl(this HtmlSanitizerTagRule rule, string attribute, string[] allowedUriSchemes = null)
 	{
-		rule.AttributeChecks.Add(attribute, new UrlCheckerAttributeSanitizer() { AllowedUriSchemes = allowedUriSchemes ?? HtmlSanitizer.defaultAllowedUriSchemes });
+		rule.AttributeChecks.Add(attribute, new UrlCheckerAttributeSanitizer(allowedUriSchemes));
 		return rule;
 	}
 }
