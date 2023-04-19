@@ -25,6 +25,7 @@
     <PackageReleaseNotes>This release makes deriving from the UrlCheckerAttributeSanitizer class easier.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+	<Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DocumentationFile>bin\Release\$(TargetFramework)\Vereyon.Web.HtmlSanitizer.xml</DocumentationFile>

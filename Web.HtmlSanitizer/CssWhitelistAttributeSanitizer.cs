@@ -36,7 +36,7 @@ public class CssWhitelistAttributeSanitizer : IHtmlAttributeSanitizer
 		{
 
 			// No empty or white space classes.
-			if (string.IsNullOrEmpty(cssClass?.Trim()))
+			if (string.IsNullOrWhiteSpace(cssClass))
 				continue;
 
 			// Only allowed classes.

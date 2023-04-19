@@ -48,10 +48,10 @@ public class HtmlSanitizer : IHtmlSanitizer
 	public delegate SanitizerOperation HtmlSanitizerAttributeCheckHandler(HtmlAttribute attribute);
 
 	/// <summary>Occurs after a node is processed.</summary>
-	public event Action<HtmlNode> PostprocessNode;
+	public event Action<HtmlNode>? PostprocessNode;
 
 	/// <summary>Occurs before a node is processed and will cancel further processing if return value is <see langword="false"/>.</summary>
-	public event Func<HtmlNode, bool> PreprocessNode;
+	public event Func<HtmlNode, bool>? PreprocessNode;
 
 	/// <summary>
 	/// Sets which CSS classes are allowed on any HTML tag.
@@ -248,7 +248,7 @@ public class HtmlSanitizer : IHtmlSanitizer
 
 			// Lookup the rule for this node (may be null). If we are in white list mode and no rule is found,
 			// remove the node. Don't remove the document however.
-			if (!Rules.TryGetValue(node.Name, out HtmlSanitizerTagRule rule)
+			if (!Rules.TryGetValue(node.Name, out HtmlSanitizerTagRule? rule)
 				&& WhiteListMode && node.NodeType != HtmlNodeType.Document)
 			{
 				node.Remove();
@@ -292,7 +292,7 @@ public class HtmlSanitizer : IHtmlSanitizer
 				{
 					string className = node.GetAttributeValue("class", string.Empty);
 					if (string.IsNullOrEmpty(className))
-						className = rule.SetClass;
+						className = rule.SetClass!;
 					else
 						className += " " + rule.SetClass;
 					_ = node.SetAttributeValue("class", className);
@@ -372,7 +372,7 @@ public class HtmlSanitizer : IHtmlSanitizer
 		AttributeCheckRegistry.Add(HtmlSanitizerCheckType.Url, new HtmlSanitizerAttributeCheckHandler(UrlCheckHandler));
 		AttributeCheckRegistry.Add(HtmlSanitizerCheckType.AllowAttribute, new HtmlSanitizerAttributeCheckHandler(x => SanitizerOperation.DoNothing));
 	}
-	private SanitizerOperation SanitizeAttribute(HtmlAttribute attribute, HtmlSanitizerTagRule rule)
+	private SanitizerOperation SanitizeAttribute(HtmlAttribute attribute, HtmlSanitizerTagRule? rule)
 	{
 
 		// Ensure that the attribute name does not contain any caps.
@@ -384,7 +384,7 @@ public class HtmlSanitizer : IHtmlSanitizer
 		// TODO: Implement this as a global attribute check?
 		if (SanitizeCssClasses && attribute.Name == "class")
 		{
-			operation = _cssAttributeSanitizer.SanitizeAttribute(attribute, rule);
+			operation = _cssAttributeSanitizer.SanitizeAttribute(attribute, rule!); //It's correct because CssAttributeSanitizer ignores 2nd parameter
 			switch (operation)
 			{
 				case SanitizerOperation.RemoveAttribute:
@@ -396,7 +396,7 @@ public class HtmlSanitizer : IHtmlSanitizer
 		if (rule != null)
 		{
 			// Apply attribute checks. If the check fails, remove the attribute completely and return.
-			if (rule.AttributeChecks.TryGetValue(attribute.Name, out IHtmlAttributeSanitizer attributeCheck))
+			if (rule.AttributeChecks.TryGetValue(attribute.Name, out IHtmlAttributeSanitizer? attributeCheck))
 			{
 				operation = attributeCheck.SanitizeAttribute(attribute, rule);
 				switch (operation)
@@ -418,7 +418,7 @@ public class HtmlSanitizer : IHtmlSanitizer
 
 
 			// Apply value override if it is specified by the rule.
-			if (rule.SetAttributes.TryGetValue(attribute.Name, out string valueOverride))
+			if (rule.SetAttributes.TryGetValue(attribute.Name, out string? valueOverride))
 				attribute.Value = valueOverride;
 
 			// If we are in white listing mode and no check or override is specified, simply remove the attribute.

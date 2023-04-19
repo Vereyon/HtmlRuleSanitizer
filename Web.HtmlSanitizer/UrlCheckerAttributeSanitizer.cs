@@ -43,7 +43,7 @@ public class UrlCheckerAttributeSanitizer : IHtmlAttributeSanitizer
 
 		string url = attribute.Value;
 
-		if (!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out Uri uri))
+		if (!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out Uri? uri))
 			return false;
 
 		// Reject the url if it is not well formed.
@@ -70,7 +70,7 @@ public static class UrlCheckerAttributeSanitizerFluentHelper
 	/// <summary>
 	/// Applies the default URL check to the specified attribute.
 	/// </summary>
-	public static HtmlSanitizerTagRule CheckAttributeUrl(this HtmlSanitizerTagRule rule, string attribute, string[] allowedUriSchemes = null)
+	public static HtmlSanitizerTagRule CheckAttributeUrl(this HtmlSanitizerTagRule rule, string attribute, string[]? allowedUriSchemes = null)
 	{
 		rule.AttributeChecks.Add(attribute, new UrlCheckerAttributeSanitizer(allowedUriSchemes));
 		return rule;
