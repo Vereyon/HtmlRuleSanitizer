@@ -177,7 +177,7 @@ public static class HtmlSanitizerFluentHelper
 	{
 
 
-		if (sanitizer.Rules.TryGetValue(tagName, out HtmlSanitizerTagRule rule))
+		if (sanitizer.Rules.TryGetValue(tagName, out HtmlSanitizerTagRule? rule))
 		{
 			if (replace)
 				_ = sanitizer.Rules.Remove(tagName);

@@ -59,7 +59,7 @@ public class HtmlSanitizerTagRule
 	/// <summary>
 	/// Gets / sets to which name this tag should be renamed. Set to null to not rename the tag.
 	/// </summary>
-	public string RenameTag { get; set; }
+	public string? RenameTag { get; set; }
 
 	/// <summary>
 	/// Sets which attributes should have their value set or overridden. Attribute name as key, value to set as value.
@@ -69,7 +69,7 @@ public class HtmlSanitizerTagRule
 	/// <summary>
 	/// Gets / sets a string of CSS classes to be added to this tag.
 	/// </summary>
-	public string SetClass { get; set; }
+	public string? SetClass { get; set; }
 
 	/// <summary>
 	/// Gets the HTML tag name this rule is to act upon.
