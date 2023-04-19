@@ -110,7 +110,7 @@ public class HtmlSanitizer : IHtmlSanitizer
 	/// </summary>
 	/// <param name="attribute"></param>
 	[Obsolete("This method has been deprecated in favor of the UrlCheckerAttributeSanitizer.")]
-	public static bool AttributeUrlCheck(HtmlAttribute attribute) => new UrlCheckerAttributeSanitizer() { AllowedUriSchemes = defaultAllowedUriSchemes }.AttributeUrlCheck(attribute);
+	public static bool AttributeUrlCheck(HtmlAttribute attribute) => new UrlCheckerAttributeSanitizer().AttributeUrlCheck(attribute);
 
 	/// <summary>
 	/// Equal to the SimpleHtml5Sanitizer but allows html and body declarations.
