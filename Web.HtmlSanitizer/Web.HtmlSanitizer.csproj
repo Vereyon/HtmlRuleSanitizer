@@ -7,7 +7,7 @@
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <PackageId>Vereyon.Web.HtmlSanitizer</PackageId>
-    <Version>1.7.0</Version>
+    <Version>1.7.1</Version>
     <Title>HtmlRuleSanitizer</Title>
     <Authors>Christ Akkermans</Authors>
     <Company>Vereyon</Company>
@@ -22,12 +22,7 @@
     <IncludeSource>true</IncludeSource>
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>This release adds some features and removes support for some old and out of support target frameworks. Functional changes are limited to removing comments by default.
-
-Remove comments by default.
-Add events before nodes are processed and after nodes are processed to ease customization.
-Make allowed URI schemes more easily configurable.
-Updatge required HtmlAgilityPack to 1.7.1</PackageReleaseNotes>
+    <PackageReleaseNotes>This release makes deriving from the UrlCheckerAttributeSanitizer class easier.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
