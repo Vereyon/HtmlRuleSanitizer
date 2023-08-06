@@ -194,8 +194,8 @@ public class HtmlSanitizer : IHtmlSanitizer
 		HtmlDocument htmlDocument = new();
 		htmlDocument.LoadHtml(html);
 
-		// Start recursize sanitiation at the document node.
-		SanitizeNode(htmlDocument.DocumentNode);
+        // Start recursize sanitiation at the document node.
+        SanitizeNode(htmlDocument.DocumentNode);
 
 		// Flatten the sanitized document and return the result.
 		return htmlDocument.DocumentNode.WriteTo();
@@ -457,7 +457,19 @@ public enum HtmlSanitizerCheckType
 
 public enum NormalizeAttributeQuotes
 {
+	/// <summary>
+	/// Attribute quotes are not normalized.
+	/// </summary>
 	NoNormalization,
-	SingleQuotes,
-	DoubleQuotes
+
+    /// <summary>
+    /// Attribute quotes are all normalized to single quotes (')
+    /// </summary>
+    SingleQuotes,
+
+
+    /// <summary>
+    /// Attribute quotes are all normalized to double quotes (")
+    /// </summary>
+    DoubleQuotes
 }

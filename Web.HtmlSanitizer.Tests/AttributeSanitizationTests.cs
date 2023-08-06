@@ -196,5 +196,34 @@ namespace Vereyon.Web
                 return SanitizerOperation.DoNothing;
             }
         }
+
+        /// <summary>
+        /// Tests if 
+        /// </summary>
+        [Fact]
+        public void AttrtibuteQuoteNormalization()
+        {
+
+            string result;
+
+            var sanitizer = new HtmlSanitizer();
+            var attributeNormalizer = new AttributeQuiteNormalizer();
+            sanitizer.Tag("input").AllowAttributes("whitelisted").SanitizeAttributes("whitelisted", attributeNormalizer);
+
+            var input = @"<input whitelisted=""abc"" whitelisted='abc' whitelisted=abc>";
+            var expected = @"<input whitelisted=""abc"" whitelisted=""abc"" whitelisted=""abc"">";
+            result = sanitizer.Sanitize(input);
+            Assert.Equal(expected, result);
+        }
+
+        // TODO: Implement this as a global attribute check? Together with the CSS whitelister perhaps?
+        class AttributeQuiteNormalizer : IHtmlAttributeSanitizer
+        {
+            public SanitizerOperation SanitizeAttribute(HtmlAttribute attribute, HtmlSanitizerTagRule tagRule)
+            {
+                attribute.QuoteType = AttributeValueQuote.DoubleQuote;
+                return SanitizerOperation.DoNothing;
+            }
+        }
     }
 }
