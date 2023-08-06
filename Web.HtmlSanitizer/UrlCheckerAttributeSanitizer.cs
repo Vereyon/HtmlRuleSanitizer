@@ -12,7 +12,12 @@ public class UrlCheckerAttributeSanitizer : IHtmlAttributeSanitizer
 	/// <summary>
 	/// Collection of the allowed URI schemes.
 	/// </summary>
-	public string[] AllowedUriSchemes { get; }
+	public string[] AllowedUriSchemes { get; protected set; }
+
+    public UrlCheckerAttributeSanitizer()
+	{
+        AllowedUriSchemes = HtmlSanitizer.defaultAllowedUriSchemes;
+    }
 
     public UrlCheckerAttributeSanitizer(string[] allowedUriSchemes)
     {
