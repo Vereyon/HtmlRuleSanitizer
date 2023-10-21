@@ -19,6 +19,7 @@ public class HtmlSanitizerTagRule
 		SetAttributes = new Dictionary<string, string>();
 		CheckAttributes = new Dictionary<string, HtmlSanitizerCheckType>();
 		AttributeChecks = new Dictionary<string, IHtmlAttributeSanitizer>();
+		ElementChecks = new List<IHtmlElementSanitizer>();
 		NoAttributesOperation = SanitizerOperation.DoNothing;
 	}
 
@@ -26,6 +27,11 @@ public class HtmlSanitizerTagRule
 	/// Sets which sanitizers to perform on which attributes. Attribute name as key, sanitizer instance as value.
 	/// </summary>
 	public IDictionary<string, IHtmlAttributeSanitizer> AttributeChecks { get; protected set; }
+
+	/// <summary>
+	/// Sets which sanitizers to perform on the whole element.
+	/// </summary>
+	public IList<IHtmlElementSanitizer> ElementChecks { get; protected set; }
 
     /// <summary>
     /// Sets which checks to perform on which attributes. Attribute name as key, check type as value.
