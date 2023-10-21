@@ -144,6 +144,18 @@ public static class HtmlSanitizerFluentHelper
 	}
 
 	/// <summary>
+	/// Specifies the passed element sanitizer is to be applied to this tag.
+	/// </summary>
+	/// <param name="rule"></param>
+	/// <param name="elementSanitizer"></param>
+	/// <returns></returns>
+	public static HtmlSanitizerTagRule Sanitize(this HtmlSanitizerTagRule rule, IHtmlElementSanitizer elementSanitizer)
+	{
+		rule.ElementChecks.Add(elementSanitizer);
+		return rule;
+	}
+
+	/// <summary>
 	/// Specifies that the value of any attribute with the given name is to be set to the specified value.
 	/// </summary>
 	/// <param name="rule"></param>

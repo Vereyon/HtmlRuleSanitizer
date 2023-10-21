@@ -311,6 +311,16 @@ public class HtmlSanitizer : IHtmlSanitizer
 				// Ensure that all attributes are set according to the rule.
 				foreach (KeyValuePair<string, string> setAttribute in rule.SetAttributes.Where(r => !node.Attributes.Contains(r.Key)))
 					node.Attributes.Add(setAttribute.Key, setAttribute.Value);
+
+				// Apply any element checks.
+				foreach (var elementCheck in rule.ElementChecks)
+				{
+					operation = elementCheck.SanitizeElement(node, rule);
+					if (!ApplyNodeOperation(node, operation))
+					{
+						return;
+					}
+				}
 			}
 
 			// Finally process any child nodes recursively.
