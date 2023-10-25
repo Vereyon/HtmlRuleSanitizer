@@ -19,8 +19,8 @@ public class HtmlSanitizer : IHtmlSanitizer
 
 	private readonly CssWhitelistAttributeSanitizer _cssAttributeSanitizer;
 
-    /// <summary>Initializes a new instance of the <see cref="HtmlSanitizer"/> class.</summary>
-    public HtmlSanitizer()
+	/// <summary>Initializes a new instance of the <see cref="HtmlSanitizer"/> class.</summary>
+	public HtmlSanitizer()
 	{
 		WhiteListMode = true;
 		EncodeHtmlEntities = true;
@@ -63,11 +63,11 @@ public class HtmlSanitizer : IHtmlSanitizer
 	/// </summary>
 	public IList<string> AllowedUriSchemes { get; set; } = new List<string>(defaultAllowedUriSchemes);
 
-    /// <summary>
-    /// Contains sanitation checks supported HtmlSanitizer class instance.
-    /// </summary>
-    [Obsolete("The fixed attribute check types have been deprecated with the IHtmlAttributeSanitizer interface.")]
-    public IDictionary<HtmlSanitizerCheckType, HtmlSanitizerAttributeCheckHandler> AttributeCheckRegistry { get; protected set; }
+	/// <summary>
+	/// Contains sanitation checks supported HtmlSanitizer class instance.
+	/// </summary>
+	[Obsolete("The fixed attribute check types have been deprecated with the IHtmlAttributeSanitizer interface.")]
+	public IDictionary<HtmlSanitizerCheckType, HtmlSanitizerAttributeCheckHandler> AttributeCheckRegistry { get; protected set; }
 
 	/// <summary>
 	/// Gets / sets if HTML entities in all text should be encoded.
@@ -117,11 +117,11 @@ public class HtmlSanitizer : IHtmlSanitizer
 	/// </summary>
 	public NormalizeAttributeQuotes NormalizeAttributeQuotes { get; set; } = NormalizeAttributeQuotes.NoNormalization;
 
-    /// <summary>
-    /// Equal to the SimpleHtml5Sanitizer but allows html and body declarations.
-    /// </summary>
-    /// <returns></returns>
-    public static HtmlSanitizer SimpleHtml5DocumentSanitizer()
+	/// <summary>
+	/// Equal to the SimpleHtml5Sanitizer but allows html and body declarations.
+	/// </summary>
+	/// <returns></returns>
+	public static HtmlSanitizer SimpleHtml5DocumentSanitizer()
 	{
 
 		HtmlSanitizer sanitizer = SimpleHtml5Sanitizer();
@@ -199,8 +199,8 @@ public class HtmlSanitizer : IHtmlSanitizer
 		HtmlDocument htmlDocument = new();
 		htmlDocument.LoadHtml(html);
 
-        // Start recursize sanitiation at the document node.
-        SanitizeNode(htmlDocument.DocumentNode);
+		// Start recursize sanitiation at the document node.
+		SanitizeNode(htmlDocument.DocumentNode);
 
 		// Flatten the sanitized document and return the result.
 		return htmlDocument.DocumentNode.WriteTo();
@@ -367,11 +367,11 @@ public class HtmlSanitizer : IHtmlSanitizer
 		}
 	}
 
-    /// <summary>
-    /// Registers the out of the box supported sanitation checks.
-    /// </summary>
-    [Obsolete("The fixed attribute check types have been deprecated with the IHtmlAttributeSanitizer interface.")]
-    private void RegisterChecks()
+	/// <summary>
+	/// Registers the out of the box supported sanitation checks.
+	/// </summary>
+	[Obsolete("The fixed attribute check types have been deprecated with the IHtmlAttributeSanitizer interface.")]
+	private void RegisterChecks()
 	{
 
 		AttributeCheckRegistry.Add(HtmlSanitizerCheckType.Url, new HtmlSanitizerAttributeCheckHandler(UrlCheckHandler));
@@ -384,21 +384,21 @@ public class HtmlSanitizer : IHtmlSanitizer
 		attribute.Name = attribute.Name.ToLowerInvariant();
 		SanitizerOperation operation;
 
-        // Apply the attribute quote normalization.
-        switch (NormalizeAttributeQuotes)
-        {
-            case NormalizeAttributeQuotes.DoubleQuotes:
-                attribute.QuoteType = AttributeValueQuote.DoubleQuote; break;
-            case NormalizeAttributeQuotes.SingleQuotes:
-                attribute.QuoteType = AttributeValueQuote.SingleQuote; break;
-            case NormalizeAttributeQuotes.NoNormalization:
-                // Intentially no nothing.
-                break;
-        }
+		// Apply the attribute quote normalization.
+		switch (NormalizeAttributeQuotes)
+		{
+			case NormalizeAttributeQuotes.DoubleQuotes:
+				attribute.QuoteType = AttributeValueQuote.DoubleQuote; break;
+			case NormalizeAttributeQuotes.SingleQuotes:
+				attribute.QuoteType = AttributeValueQuote.SingleQuote; break;
+			case NormalizeAttributeQuotes.NoNormalization:
+				// Intentially no nothing.
+				break;
+		}
 
-        // Apply global CSS class whitelist. If the attribute is complete removed, we are done.
-        // TODO: Implement this as a global attribute check?
-        if (SanitizeCssClasses && attribute.Name == "class")
+		// Apply global CSS class whitelist. If the attribute is complete removed, we are done.
+		// TODO: Implement this as a global attribute check?
+		if (SanitizeCssClasses && attribute.Name == "class")
 		{
 			operation = _cssAttributeSanitizer.SanitizeAttribute(attribute, rule);
 			switch (operation)
