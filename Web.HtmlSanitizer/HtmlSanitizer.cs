@@ -19,8 +19,8 @@ public class HtmlSanitizer : IHtmlSanitizer
 
 	private readonly CssWhitelistAttributeSanitizer _cssAttributeSanitizer;
 
-	/// <summary>Initializes a new instance of the <see cref="HtmlSanitizer"/> class.</summary>
-	public HtmlSanitizer()
+    /// <summary>Initializes a new instance of the <see cref="HtmlSanitizer"/> class.</summary>
+    public HtmlSanitizer()
 	{
 		WhiteListMode = true;
 		EncodeHtmlEntities = true;
@@ -113,10 +113,15 @@ public class HtmlSanitizer : IHtmlSanitizer
 	public static bool AttributeUrlCheck(HtmlAttribute attribute) => new UrlCheckerAttributeSanitizer().AttributeUrlCheck(attribute);
 
 	/// <summary>
-	/// Equal to the SimpleHtml5Sanitizer but allows html and body declarations.
+	/// Gets / sets whether the quotes of HTML attributes should be normalized.
 	/// </summary>
-	/// <returns></returns>
-	public static HtmlSanitizer SimpleHtml5DocumentSanitizer()
+	public NormalizeAttributeQuotes NormalizeAttributeQuotes { get; set; } = NormalizeAttributeQuotes.NoNormalization;
+
+    /// <summary>
+    /// Equal to the SimpleHtml5Sanitizer but allows html and body declarations.
+    /// </summary>
+    /// <returns></returns>
+    public static HtmlSanitizer SimpleHtml5DocumentSanitizer()
 	{
 
 		HtmlSanitizer sanitizer = SimpleHtml5Sanitizer();
@@ -377,12 +382,23 @@ public class HtmlSanitizer : IHtmlSanitizer
 
 		// Ensure that the attribute name does not contain any caps.
 		attribute.Name = attribute.Name.ToLowerInvariant();
-
 		SanitizerOperation operation;
 
-		// Apply global CSS class whitelist. If the attribute is complete removed, we are done.
-		// TODO: Implement this as a global attribute check?
-		if (SanitizeCssClasses && attribute.Name == "class")
+        // Apply the attribute quote normalization.
+        switch (NormalizeAttributeQuotes)
+        {
+            case NormalizeAttributeQuotes.DoubleQuotes:
+                attribute.QuoteType = AttributeValueQuote.DoubleQuote; break;
+            case NormalizeAttributeQuotes.SingleQuotes:
+                attribute.QuoteType = AttributeValueQuote.SingleQuote; break;
+            case NormalizeAttributeQuotes.NoNormalization:
+                // Intentially no nothing.
+                break;
+        }
+
+        // Apply global CSS class whitelist. If the attribute is complete removed, we are done.
+        // TODO: Implement this as a global attribute check?
+        if (SanitizeCssClasses && attribute.Name == "class")
 		{
 			operation = _cssAttributeSanitizer.SanitizeAttribute(attribute, rule);
 			switch (operation)

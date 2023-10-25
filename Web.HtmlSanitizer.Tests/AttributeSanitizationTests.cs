@@ -198,20 +198,32 @@ namespace Vereyon.Web
         }
 
         /// <summary>
-        /// Tests if 
+        /// Tests if quote normalization works.
         /// </summary>
         [Fact]
         public void AttrtibuteQuoteNormalization()
         {
 
-            string result;
+            string result, expected;
 
             var sanitizer = new HtmlSanitizer();
-            var attributeNormalizer = new AttributeQuiteNormalizer();
-            sanitizer.Tag("input").AllowAttributes("whitelisted").SanitizeAttributes("whitelisted", attributeNormalizer);
-
+            sanitizer.Tag("input").AllowAttributes("whitelisted");
             var input = @"<input whitelisted=""abc"" whitelisted='abc' whitelisted=abc>";
-            var expected = @"<input whitelisted=""abc"" whitelisted=""abc"" whitelisted=""abc"">";
+
+            // By default no quote normalization should be performed
+            expected = @"<input whitelisted=""abc"" whitelisted='abc' whitelisted=""abc"">";
+            result = sanitizer.Sanitize(input);
+            Assert.Equal(expected, result);
+
+            // Normalize to double quotes
+            sanitizer.NormalizeAttributeQuotes = NormalizeAttributeQuotes.DoubleQuotes;
+            expected = @"<input whitelisted=""abc"" whitelisted=""abc"" whitelisted=""abc"">";
+            result = sanitizer.Sanitize(input);
+            Assert.Equal(expected, result);
+
+            // Normalize to single quotes
+            sanitizer.NormalizeAttributeQuotes = NormalizeAttributeQuotes.SingleQuotes;
+            expected = @"<input whitelisted='abc' whitelisted='abc' whitelisted='abc'>";
             result = sanitizer.Sanitize(input);
             Assert.Equal(expected, result);
         }
