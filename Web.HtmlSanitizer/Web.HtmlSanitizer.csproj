@@ -11,7 +11,7 @@
     <Title>HtmlRuleSanitizer</Title>
     <Authors>Christ Akkermans</Authors>
     <Company>Vereyon</Company>
-    <Description>Rule based HTML sanitizer using a white list. Documentation at: https://github.com/Vereyon/HtmlRuleSanitizer</Description>
+    <Description>Rule based HTML sanitizer using a white list. Use it to cleanup HTML and removing malicious content.</Description>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Copyright>Copyright © 2023</Copyright>
     <PackageProjectUrl>https://github.com/Vereyon/HtmlRuleSanitizer</PackageProjectUrl>
@@ -22,7 +22,7 @@
     <IncludeSource>true</IncludeSource>
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>This release makes deriving from the UrlCheckerAttributeSanitizer class easier.</PackageReleaseNotes>
+    <PackageReleaseNotes>This release adds support for custom element sanitizers, implements attribute quote normalization and enables nullable references types to reduce the chances of NullReferenceExceptions.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
 	<Nullable>enable</Nullable>
