@@ -63,11 +63,11 @@ public class HtmlSanitizer : IHtmlSanitizer
 	/// </summary>
 	public IList<string> AllowedUriSchemes { get; set; } = new List<string>(defaultAllowedUriSchemes);
 
-    /// <summary>
-    /// Contains sanitation checks supported HtmlSanitizer class instance.
-    /// </summary>
-    [Obsolete("The fixed attribute check types have been deprecated with the IHtmlAttributeSanitizer interface.")]
-    public IDictionary<HtmlSanitizerCheckType, HtmlSanitizerAttributeCheckHandler> AttributeCheckRegistry { get; protected set; }
+	/// <summary>
+	/// Contains sanitation checks supported HtmlSanitizer class instance.
+	/// </summary>
+	[Obsolete("The fixed attribute check types have been deprecated with the IHtmlAttributeSanitizer interface.")]
+	public IDictionary<HtmlSanitizerCheckType, HtmlSanitizerAttributeCheckHandler> AttributeCheckRegistry { get; protected set; }
 
 	/// <summary>
 	/// Gets / sets if HTML entities in all text should be encoded.
@@ -111,6 +111,11 @@ public class HtmlSanitizer : IHtmlSanitizer
 	/// <param name="attribute"></param>
 	[Obsolete("This method has been deprecated in favor of the UrlCheckerAttributeSanitizer.")]
 	public static bool AttributeUrlCheck(HtmlAttribute attribute) => new UrlCheckerAttributeSanitizer().AttributeUrlCheck(attribute);
+
+	/// <summary>
+	/// Gets / sets whether the quotes of HTML attributes should be normalized.
+	/// </summary>
+	public NormalizeAttributeQuotes NormalizeAttributeQuotes { get; set; } = NormalizeAttributeQuotes.NoNormalization;
 
 	/// <summary>
 	/// Equal to the SimpleHtml5Sanitizer but allows html and body declarations.
@@ -362,11 +367,11 @@ public class HtmlSanitizer : IHtmlSanitizer
 		}
 	}
 
-    /// <summary>
-    /// Registers the out of the box supported sanitation checks.
-    /// </summary>
-    [Obsolete("The fixed attribute check types have been deprecated with the IHtmlAttributeSanitizer interface.")]
-    private void RegisterChecks()
+	/// <summary>
+	/// Registers the out of the box supported sanitation checks.
+	/// </summary>
+	[Obsolete("The fixed attribute check types have been deprecated with the IHtmlAttributeSanitizer interface.")]
+	private void RegisterChecks()
 	{
 
 		AttributeCheckRegistry.Add(HtmlSanitizerCheckType.Url, new HtmlSanitizerAttributeCheckHandler(UrlCheckHandler));
@@ -377,8 +382,19 @@ public class HtmlSanitizer : IHtmlSanitizer
 
 		// Ensure that the attribute name does not contain any caps.
 		attribute.Name = attribute.Name.ToLowerInvariant();
-
 		SanitizerOperation operation;
+
+		// Apply the attribute quote normalization.
+		switch (NormalizeAttributeQuotes)
+		{
+			case NormalizeAttributeQuotes.DoubleQuotes:
+				attribute.QuoteType = AttributeValueQuote.DoubleQuote; break;
+			case NormalizeAttributeQuotes.SingleQuotes:
+				attribute.QuoteType = AttributeValueQuote.SingleQuote; break;
+			case NormalizeAttributeQuotes.NoNormalization:
+				// Intentially no nothing.
+				break;
+		}
 
 		// Apply global CSS class whitelist. If the attribute is complete removed, we are done.
 		// TODO: Implement this as a global attribute check?
@@ -457,7 +473,19 @@ public enum HtmlSanitizerCheckType
 
 public enum NormalizeAttributeQuotes
 {
+	/// <summary>
+	/// Attribute quotes are not normalized.
+	/// </summary>
 	NoNormalization,
-	SingleQuotes,
-	DoubleQuotes
+
+    /// <summary>
+    /// Attribute quotes are all normalized to single quotes (')
+    /// </summary>
+    SingleQuotes,
+
+
+    /// <summary>
+    /// Attribute quotes are all normalized to double quotes (")
+    /// </summary>
+    DoubleQuotes
 }

@@ -196,5 +196,46 @@ namespace Vereyon.Web
                 return SanitizerOperation.DoNothing;
             }
         }
+
+        /// <summary>
+        /// Tests if quote normalization works.
+        /// </summary>
+        [Fact]
+        public void AttrtibuteQuoteNormalization()
+        {
+
+            string result, expected;
+
+            var sanitizer = new HtmlSanitizer();
+            sanitizer.Tag("input").AllowAttributes("whitelisted");
+            var input = @"<input whitelisted=""abc"" whitelisted='abc' whitelisted=abc>";
+
+            // By default no quote normalization should be performed
+            expected = @"<input whitelisted=""abc"" whitelisted='abc' whitelisted=""abc"">";
+            result = sanitizer.Sanitize(input);
+            Assert.Equal(expected, result);
+
+            // Normalize to double quotes
+            sanitizer.NormalizeAttributeQuotes = NormalizeAttributeQuotes.DoubleQuotes;
+            expected = @"<input whitelisted=""abc"" whitelisted=""abc"" whitelisted=""abc"">";
+            result = sanitizer.Sanitize(input);
+            Assert.Equal(expected, result);
+
+            // Normalize to single quotes
+            sanitizer.NormalizeAttributeQuotes = NormalizeAttributeQuotes.SingleQuotes;
+            expected = @"<input whitelisted='abc' whitelisted='abc' whitelisted='abc'>";
+            result = sanitizer.Sanitize(input);
+            Assert.Equal(expected, result);
+        }
+
+        // TODO: Implement this as a global attribute check? Together with the CSS whitelister perhaps?
+        class AttributeQuiteNormalizer : IHtmlAttributeSanitizer
+        {
+            public SanitizerOperation SanitizeAttribute(HtmlAttribute attribute, HtmlSanitizerTagRule tagRule)
+            {
+                attribute.QuoteType = AttributeValueQuote.DoubleQuote;
+                return SanitizerOperation.DoNothing;
+            }
+        }
     }
 }
