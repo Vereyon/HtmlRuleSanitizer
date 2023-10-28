@@ -26,10 +26,10 @@ namespace Vereyon.Web
         public void SimpleWhitelistCssTest()
         {
 
-            string input = @"<p class=""illegal"">Test content</p>Outside tag";
+            string input = @"<p class=""legal"">Test content</p>Outside tag";
 
             var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
-            sanitizer.AllowCss("illegal");
+            sanitizer.AllowCss("legal");
             var result = sanitizer.Sanitize(input);
 
             Assert.Equal(input, result);
@@ -44,6 +44,27 @@ namespace Vereyon.Web
 
             var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
             sanitizer.AllowCss("legal");
+            var result = sanitizer.Sanitize(input);
+
+            Assert.Equal(expected, result);
+        }
+
+        /// <summary>
+        /// More complicated CSS whiteling class which includes multiple CSS classes.
+        /// </summary>
+        [Fact]
+        public void WhitelistCssMultipleTest()
+        {
+
+            string input = @"<p class=""illegal"">Content</p>
+<p class=""illegal legal"">Content</p>
+<p class=""also-legal"">Content</p>";
+            string expected = @"<p>Content</p>
+<p class=""legal"">Content</p>
+<p class=""also-legal"">Content</p>";
+
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+            sanitizer.AllowCss("legal also-legal");
             var result = sanitizer.Sanitize(input);
 
             Assert.Equal(expected, result);
