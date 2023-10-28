@@ -33,6 +33,7 @@ Features
  * Tag flattening to simplify document structure while maintaining content
  * Tag renaming
  * Attribute checks (e.g. URL validity) and white listing
+ * Attribute quote normalization
  * A fluent style configuration interface
  * HTML entity encoding
  * Comment removal
@@ -82,6 +83,14 @@ sanitizer.Tag("a").SetAttribute("target", "_blank")
 string cleanHtml = sanitizer.Sanitize(dirtyHtml);
 ```
 
+### CSS class shitelisting
+
+Global CSS class whitelisting is achieved as follows where CSS classes are space separated:
+
+```C#
+sanitizer.AllowCss("legal also-legal");
+```
+
 ### Custom attribute sanitization
 
 Attribute sanitization can be peformed by implementing a custom `IHtmlAttributeSanitizer`. The code below illustrates a simple custom sanitizer which overrides the attribute value:
@@ -106,12 +115,28 @@ var attributeSanitizer = new CustomSanitizer();
 sanitizer.Tag("span").SanitizeAttributes("style", attributeSanitizer);
 ```
 
+### Custom element sanitization
+
+Element sanitization can be performed by implement a customer `IHtmlElementSanitizer`, much like custom attribute sanitization.
+The code below illustrates a custom sanitizer which will remove `span` elements which contain the text "remove me":
+
+```C#
+var sanitizer = new HtmlSanitizer();
+sanitizer.Tag("span").Sanitize(new CustomSanitizer(element =>
+{
+    return element.InnerText == "remove me"
+        ? SanitizerOperation.RemoveTag
+        : SanitizerOperation.DoNothing;
+}));
+```
+
 Contributing
 ------------
 
+Contributions are welcome through a GitHub pull request.
+
 ### Setup
 
-Using .NET Core
 ```
 dotnet restore
 ```
@@ -120,7 +145,6 @@ dotnet restore
 
 Got tests? Yes, see the tests project. It uses xUnit.
 
-Using .NET Core
 ```
 cd Web.HtmlSanitizer.Tests/
 dotnet test
@@ -131,6 +155,8 @@ More information
 
  * [HtmlRuleSanitizer NuGet package](https://www.nuget.org/packages/Vereyon.Web.HtmlSanitizer/)
  * [CodeProject article on HtmlRuleSanitizer](http://www.codeproject.com/Articles/879381/Rule-based-HTML-sanitizer)
+ * [Html Agility Pack (HAP)](https://github.com/zzzprojects/html-agility-pack/)
+ 
 
 License
 -------
