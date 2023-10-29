@@ -83,7 +83,7 @@ sanitizer.Tag("a").SetAttribute("target", "_blank")
 string cleanHtml = sanitizer.Sanitize(dirtyHtml);
 ```
 
-### CSS class shitelisting
+### CSS class whitelisting
 
 Global CSS class whitelisting is achieved as follows where CSS classes are space separated:
 
