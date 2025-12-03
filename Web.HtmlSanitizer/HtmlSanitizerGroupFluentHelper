@@ -10,9 +10,7 @@ public static class HtmlSanitizerGroupFluentHelper
         var list = new List<HtmlSanitizerTagRule>(tagNames.Length);
         foreach (var tagName in tagNames)
         {
-            var value = new HtmlSanitizerTagRule(tagName);
-            list.Add(value);
-            sanitizer.Rules.Add(tagName, value);
+            list.Add(sanitizer.Tag(tagName));
         }
         return new HtmlSanitizerTagRules(list);
     }
