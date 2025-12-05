@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net48</TargetFrameworks>
     <IsTestProject>true</IsTestProject>
@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="xunit" Version="2.4.2" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.7.1" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11" />
     <PackageReference Include="xunit.extensibility.execution" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <PrivateAssets>all</PrivateAssets>

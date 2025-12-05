@@ -57,5 +57,23 @@ namespace Vereyon.Web
                 return sanitize(element);
             }
         }
+
+        /// <summary>
+        /// This test aims to cover a bug in HTML Agility Pack which was fixed in version 1.11.
+        /// Versions before it would result in malformed HTML being returned.
+        /// </summary>
+        [Fact]
+        public void IncompleteTagHandling()
+        {
+
+            var sanitizer = HtmlSanitizer.SimpleHtml5Sanitizer();
+            sanitizer.Tag("svg");
+            sanitizer.Tag("p");
+
+            var input = @"<p><svg />";
+            var expected = "<p><svg></svg></p>";
+            var output = sanitizer.Sanitize(input);
+            Assert.Equal(expected, output);
+        }
     }
 }
