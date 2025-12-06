@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net462;net48;netstandard2.0;netstandard2.1;net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>net462;netstandard2.0;net8.0</TargetFrameworks>
     <AssemblyName>Vereyon.Web.HtmlSanitizer</AssemblyName>
     <RootNamespace>Vereyon.Web</RootNamespace>
     <SignAssembly>true</SignAssembly>
@@ -25,7 +25,7 @@
     <PackageReleaseNotes>This release adds support for custom element sanitizers, implements attribute quote normalization and enables nullable references types to reduce the chances of NullReferenceExceptions.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-	<Nullable>enable</Nullable>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DocumentationFile>bin\Release\$(TargetFramework)\Vereyon.Web.HtmlSanitizer.xml</DocumentationFile>
