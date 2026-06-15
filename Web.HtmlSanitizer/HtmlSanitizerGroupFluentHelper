@@ -15,6 +15,9 @@ public static class HtmlSanitizerGroupFluentHelper
         return new HtmlSanitizerTagRules(list);
     }
 
+    /// <summary>
+    /// Removes the tag but preserves it's contents in place of the tag matched by this rule.
+    /// </summary>
     public static HtmlSanitizerTagRules Flatten(this HtmlSanitizerTagRules rules)
     {
         foreach (var rule in rules.RuleList)
@@ -24,6 +27,9 @@ public static class HtmlSanitizerGroupFluentHelper
         return rules;
     }
 
+    /// <summary>
+    /// Specifies that empty tags matching this rule should be removed.
+    /// </summary>
     public static HtmlSanitizerTagRules RemoveEmpty(this HtmlSanitizerTagRules rules)
     {
         foreach (var rule in rules.RuleList)
@@ -33,6 +39,9 @@ public static class HtmlSanitizerGroupFluentHelper
         return rules;
     }
 
+    /// <summary>
+    /// Specifies that this tag should be renamed. 
+    /// </summary>
     public static HtmlSanitizerTagRules Rename(this HtmlSanitizerTagRules rules, string newName)
     {
         foreach (var rule in rules.RuleList)
@@ -42,6 +51,9 @@ public static class HtmlSanitizerGroupFluentHelper
         return rules;
     }
 
+    /// <summary>
+    /// Specifies that this tag should be sanitized by element sanitizer. 
+    /// </summary>
     public static HtmlSanitizerTagRules Sanitize(this HtmlSanitizerTagRules rules, IHtmlElementSanitizer elementSanitizer)
     {
         foreach (var rule in rules.RuleList)
@@ -51,6 +63,9 @@ public static class HtmlSanitizerGroupFluentHelper
         return rules;
     }
 
+    /// <summary>
+    /// Specifies the operation to be performed on the tag if it does not have any attributes.
+    /// </summary>
     public static HtmlSanitizerTagRules NoAttributes(this HtmlSanitizerTagRules rules, SanitizerOperation operation)
     {
         foreach (var rule in rules.RuleList)
@@ -60,6 +75,10 @@ public static class HtmlSanitizerGroupFluentHelper
         return rules;
     }
 
+
+    /// <summary>
+    /// Specifies the global operation to be performed on the tag.
+    /// </summary>
     public static HtmlSanitizerTagRules Operation(this HtmlSanitizerTagRules rules, SanitizerOperation operation)
     {
         foreach (var rule in rules.RuleList)
@@ -69,6 +88,9 @@ public static class HtmlSanitizerGroupFluentHelper
         return rules;
     }
 
+    /// <summary>
+    /// Specifies that this tag should be completely removed with it's contents.
+    /// </summary>
     public static void Remove(this HtmlSanitizerTagRules rules)
     {
         foreach (var rule in rules.RuleList)
