@@ -44,7 +44,7 @@ namespace Vereyon.Web
 
             // This comment tag will 'confuse' HAP versions before 1.7.1, allowing the maliscious onerror attribute contents to get through.
             var input = @"<!-- abc --!> <img src=x onerror=alert(1)>";
-            var expected = @"<!-- abc --!> <img src=""x"">";
+            var expected = @"<!-- abc --!> <img src=x>";
             var result = sanitizer.Sanitize(input);
 
             Assert.Equal(expected, result); 

@@ -147,7 +147,7 @@ namespace Vereyon.Web
             sanitizer.Tag("input").AllowAttributes("disabled value");
 
             var input = @"<input disabled value=""test"">";
-            var expected = @"<input disabled="""" value=""test"">";
+            var expected = @"<input disabled value=""test"">";
             result = sanitizer.Sanitize(input);
             Assert.Equal(expected, result);
         }
