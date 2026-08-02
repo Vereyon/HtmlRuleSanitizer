@@ -211,7 +211,8 @@ namespace Vereyon.Web
             var input = @"<input whitelisted=""abc"" whitelisted='abc' whitelisted=abc>";
 
             // By default no quote normalization should be performed
-            expected = @"<input whitelisted=""abc"" whitelisted='abc' whitelisted=""abc"">";
+            // Note that attribute values without spaces don't need to be quoted in HTML. They do need to be in XHTML.
+            expected = @"<input whitelisted=""abc"" whitelisted='abc' whitelisted=abc>";
             result = sanitizer.Sanitize(input);
             Assert.Equal(expected, result);
 
