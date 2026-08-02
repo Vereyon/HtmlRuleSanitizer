@@ -80,7 +80,7 @@ sanitizer.AllowCss("legal-css");
 
 ## Tag Renaming
 
-What to do with people who still manage to submit documents containing for example `<b>` tags? The use of the `<b>` is discouraged and I do not want to have to deal with both <strong> and <b> tags when transforming the document at some later stage. To this end, HtmlSanitizer is equipped with a tag renaming registry.
+What to do with people who still manage to submit documents containing for example `<b>` tags? The use of the `<b>` is discouraged and I do not want to have to deal with both `<strong>` and `<b>` tags when transforming the document at some later stage. To this end, HtmlSanitizer is equipped with a tag renaming registry.
 
 
 ```csharp
@@ -197,3 +197,4 @@ Find the latest version, see https://github.com/Vereyon/HtmlRuleSanitizer
 
 8/13/2016: Version 1.2.0: Implemented HTML entity encoding and cascading empty node removal.
 6/17/2015: Version 1.1.0: Added tag attribute white listing and additional unit tests.
+23/2/2013: Article posted on CodeProject.com
